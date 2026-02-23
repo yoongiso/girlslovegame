@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>未来代言人</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高级私立中学</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <!-- 修改后的搜索栏，添加 target="_blank" -->
+        <div class="search-bar">
+            <div class="search-group">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="输入关键词..." id="search-input">
+                    <button class="search-button" id="search-button">搜索</button>
+                </div>
+            </div>
+            <a href="01邮件.html" class="home-icon" title="返回工作台" target="_blank">🏠</a>
+        </div>
+
+        <div class="content-area">
+            <!-- 返回按钮 -->
+            <div class="back-button" onclick="history.back()">返回</div>
+
+            <div class="news-detail">
+                <div class="news-header">
+                    <h1 class="news-title">2024学年第一学期“未来代言人”结果公布</h1>
+                    <div class="news-meta">
+                        <span>发布部门：校园新闻部</span>
+                        <span>发布日期：2025.01.28</span>
+                        <span>阅读量：2,347</span>
+                    </div>
+                </div>
+                <div class="news-content">
+                    <!-- 移除了所有 .news-highlight 高亮，改为普通文本 -->
+                    <p>昨日，首届“未来代言人”评选结果正式揭晓，高二（7）班的江雨薇同学从全校候选人中脱颖而出，成为我校推行新评选制度以来的第一位当选者。</p>
+                    
+                    <p>消息公布后，校园内反响热烈。多位受访师生表示：“对这个结果并不意外。”</p>
+                    
+                    <p>据统计，江雨薇自入学以来，历次大考稳居年级第一，在我校学生交响乐团任首席小提琴手，被同学誉为圣樱 “小提琴女神”，在校期间多次获得全国级赛事的奖项。</p>
+                    
+                    <!-- 引文改为普通段落，无引用框 -->
+                    <p>在采访中，江雨薇坦言“我完全配得上这个奖项”，她将自己的成果归因于母亲的培养和鼓励，表示“我有信心成为第一个蝉联的人”。</p>
+                    
+                    <p style="margin-top: 32px; color: #8A9AA8; font-size: 14px;">* 根据学校评选规则，“未来代言人”每学期评选一人，当选者可获得专项奖学金及优先推荐资格。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">6/43</span>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+    </script>
+
+        <script src="search.js"></script>
+
+    
+</body>
+</html>

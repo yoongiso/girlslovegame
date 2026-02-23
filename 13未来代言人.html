@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>帖子详情 · 圣樱高校学生论坛</title>
+    <link rel="stylesheet" href="style-forum.css">
+</head>
+<body>
+    <div class="container">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高校学生论坛</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <div class="content-area">
+            <div class="nav-bar">
+                <span class="back-link" onclick="history.back()">返回</span>
+            </div>
+
+            <div class="post-main">
+                <h1 class="post-title">搞半天这个未来代言人还是看成绩啊？</h1>
+                
+                <div class="post-header">
+                    <span class="author-name">帖主</span>
+                    <span class="post-meta">2025-05-13</span>
+                </div>
+                
+                <div class="post-content">
+                    <p>我帮老师做数据表才发现，个人成绩这项权重巨高，其他项就算拉满也没用，总分还是追不上</p>
+                </div>
+            </div>
+
+            <div class="comments-section">
+                <div class="comments-title">全部回复 · 3条</div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人A</span>
+                        <span class="comment-time">2025-05-14</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>晕，那搞这一出干嘛？直接说每年都颁给她不就行了？反正也没人考得过她</p>
+                    </div>
+                </div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人B</span>
+                        <span class="comment-time">2025-05-14</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>李远明听到这话肯定又要把她的书包扔进喷泉了哈哈哈哈</p>
+                    </div>
+                </div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人C</span>
+                        <span class="comment-time">2025-07-05</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>今年居然不是她……我真惊呆了</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">18/43</span>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>终局 · 判断 · 少女心情大事记</title>
+    <style>
+        /* 保持与结局页面完全一致的样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #F1F5F9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background-color: #FFFFFF;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            border: 1px solid #E9ECF0;
+        }
+
+        /* 顶部简单栏 - 只保留右侧时间 */
+        .simple-bar {
+            background-color: #F8FAFC;
+            padding: 8px 24px;
+            border-bottom: 1px solid #E2E8F0;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            font-size: 13px;
+            color: #8A9AA8;
+        }
+
+        /* 主要内容区 */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 40px 70px;
+            background: linear-gradient(145deg, #FFFFFF 0%, #F9FBFD 100%);
+        }
+
+        .ending-badge {
+            display: block;
+            width: fit-content;
+            background-color: #4A5A6A;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 6px 18px;
+            border-radius: 40px;
+            margin: 0 auto 24px;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        /* 卡片 - 与结局卡片风格一致 */
+        .judge-card {
+            background-color: transparent;
+            padding: 0;
+            max-width: 700px;
+            width: 100%;
+        }
+
+        /* 正文内容 - 整体右移，并居中文本 */
+        .judge-content {
+            color: #3F4D5C;
+            line-height: 2.2;
+            font-size: 16px;
+            background-color: transparent;
+            padding-left: 40px;
+            padding-right: 40px;
+            text-align: center;
+        }
+
+        /* 每个问题区域之间间距拉大且完全一致 */
+        .question-block {
+            margin-bottom: 80px;  /* 加大间距到100px，确保三个问题间距一致 */
+        }
+
+        .question-block:last-child {
+            margin-bottom: 100;
+        }
+
+        .judge-content p {
+            margin-bottom: 28px;
+        }
+
+        /* 按钮容器 - 减小上边距 */
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0 0;  /* 减小上边距 */
+            flex-wrap: wrap;
+        }
+
+        /* 选项按钮 - 进一步缩小，浅黄底色 */
+        .choice-btn {
+            background-color: #FDF5E6;  /* 浅黄底色 */
+            color: #4A5A6A;
+            border: 1px solid #E8D9C5;  /* 浅黄棕色边框 */
+            padding: 6px 20px;           /* 进一步缩小内边距 */
+            border-radius: 40px;
+            font-size: 14px;              /* 缩小字号 */
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 100px;             /* 缩小最小宽度 */
+            letter-spacing: 0.3px;
+        }
+
+        .choice-btn:hover {
+            background-color: #FAEBD7;    /* 深一点的浅黄 */
+            color: #2C3A47;
+            border-color: #C49A6C;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px -4px rgba(0,0,0,0.1);
+        }
+
+        .choice-btn:active {
+            transform: translateY(0);
+        }
+
+        /* 所有按钮统一风格 */
+        .choice-btn.secondary {
+            background-color: #FDF5E6;
+            color: #4A5A6A;
+            border: 1px solid #E8D9C5;
+        }
+
+        .choice-btn.secondary:hover {
+            background-color: #FAEBD7;
+            border-color: #C49A6C;
+        }
+
+        /* 填空题区域样式 */
+        .fill-question {
+            font-size: 16px;
+            color: #3F4D5C;
+            margin-bottom: 28px;
+            line-height: 2.2;
+            text-align: center;
+        }
+
+        .fill-input-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .fill-input {
+            width: 20%;
+            max-width: 280px;
+            padding: 8px 16px;           /* 稍微缩小输入框 */
+            border: 1px solid #D0D9E2;
+            border-radius: 40px;
+            font-size: 14px;
+            background-color: #F8FAFC;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .fill-input:focus {
+            outline: none;
+            border-color: #C49A6C;
+            background-color: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(196,154,108,0.1);
+        }
+
+        .fill-submit {
+            background-color: #FDF5E6;    /* 浅黄底色 */
+            color: #4A5A6A;
+            border: 1px solid #E8D9C5;
+            padding: 6px 20px;            /* 与按钮一致 */
+            border-radius: 40px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 100px;
+        }
+
+        .fill-submit:hover {
+            background-color: #FAEBD7;
+            border-color: #C49A6C;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px -4px rgba(0,0,0,0.1);
+        }
+
+        .fill-error {
+            color: #C45A6C;
+            font-size: 14px;
+            margin: 10px 0;
+            min-height: 24px;
+            text-align: center;
+        }
+
+        /* 隐藏类 */
+        .hidden {
+            display: none;
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .hero { padding: 40px 20px; }
+            .judge-content {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            .question-block {
+                margin-bottom: 70px;  /* 移动端稍微减小，但仍保持较大间距 */
+            }
+            .button-group {
+                gap: 12px;
+            }
+            .choice-btn, .fill-submit {
+                padding: 5px 16px;
+                min-width: 90px;
+                font-size: 13px;
+            }
+            .fill-input {
+                width: 30%;              /* 减小宽度 */
+                max-width: 200px;        /* 同时减小最大宽度 */
+                padding: 8px 16px;
+                        }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 简化顶部栏 - 只保留右侧时间 -->
+        <div class="simple-bar">
+            <span id="current-time"></span>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="hero">
+            <div class="judge-card">
+                <!-- 填空题区域 (始终可见，作为解锁前置) -->
+                <div class="judge-content">
+                    <div class="question-block">
+                        <div class="fill-question">你必须先搞清楚<br>Farrell的真实身份是</div>
+                        <div class="fill-input-wrapper">
+                            <input type="text" class="fill-input" id="farrell-input" placeholder="请输入姓名">
+                            <button class="fill-submit" id="farrell-submit">提交</button>
+                            <div class="fill-error" id="fill-error"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第一题区域 (初始隐藏，填空题正确后显示) -->
+                <div id="question1-area" class="judge-content hidden">
+                    <div class="question-block">
+                        <p>经过资料整合与分析<br>你认为此次校园霸凌的真正受害者是——</p>
+                        <div class="button-group">
+                            <button class="choice-btn" id="choose-yezhen">叶蓁</button>
+                            <button class="choice-btn" id="choose-jiangyuwei">江雨薇</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第二题区域 (初始隐藏，选择叶蓁后显示) -->
+                <div id="question2-area" class="judge-content hidden">
+                    <div class="question-block">
+                        <p>
+                            你正准备回复Farrell的邮件，忽然接到了江清的电话<br>她催促你快点提供汇款账户，她要尽快给你佣金，不然现金流会出现问题<br>
+                            你决定——
+                        </p>
+                        <div class="button-group">
+                            <button class="choice-btn" id="choose-immediate">立刻收款</button>
+                            <button class="choice-btn" id="choose-delay">延迟收款</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 更新时间
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // 获取元素
+        const q1Area = document.getElementById('question1-area');
+        const q2Area = document.getElementById('question2-area');
+        const chooseYezhen = document.getElementById('choose-yezhen');
+        const chooseJiangyuwei = document.getElementById('choose-jiangyuwei');
+        const chooseImmediate = document.getElementById('choose-immediate');
+        const chooseDelay = document.getElementById('choose-delay');
+        const farrellInput = document.getElementById('farrell-input');
+        const farrellSubmit = document.getElementById('farrell-submit');
+        const fillError = document.getElementById('fill-error');
+
+        // 标记填空题是否已正确解锁
+        let isUnlocked = false;
+        // 标记第一题是否已选叶蓁（用于控制第二题显示）
+        let hasChosenYezhen = false;
+
+        // 填空题提交逻辑
+        farrellSubmit.addEventListener('click', function() {
+            const answer = farrellInput.value.trim();
+            
+            if (answer === '') {
+                fillError.textContent = '你无法回复该邮件…';
+                return;
+            }
+
+            if (answer === '李远明') {
+                // 正确，解锁第一题
+                isUnlocked = true;
+                fillError.textContent = ''; // 清除错误信息
+                q1Area.classList.remove('hidden'); // 显示第一题
+                // 禁用输入框和提交按钮，防止重复提交
+                farrellInput.disabled = true;
+                farrellSubmit.disabled = true;
+                farrellSubmit.style.opacity = '0.5';
+                farrellSubmit.style.cursor = 'not-allowed';
+            } else {
+                fillError.textContent = '你无法回复该邮件…';
+            }
+        });
+
+        // 回车键提交
+        farrellInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                farrellSubmit.click();
+            }
+        });
+
+        // 第一题：叶蓁 → 显示第二题（不隐藏第一题）
+        chooseYezhen.addEventListener('click', function() {
+            // 确保已经解锁
+            if (!isUnlocked) {
+                alert('请先回答最后一个问题');
+                return;
+            }
+            // 如果已经选过叶蓁，不做重复操作
+            if (!hasChosenYezhen) {
+                hasChosenYezhen = true;
+                // 移除第二题的隐藏类，使其显示在第一题下方
+                q2Area.classList.remove('hidden');
+            }
+        });
+
+        // 第一题：江雨薇 → 直接跳转结局D.html
+        chooseJiangyuwei.addEventListener('click', function() {
+            if (!isUnlocked) {
+                alert('请先回答最后一个问题');
+                return;
+            }
+            window.location.href = '结局D.html';
+        });
+
+        // 第二题：立刻收款
+        chooseImmediate.addEventListener('click', function() {
+            if (!isUnlocked) {
+                alert('请先回答最后一个问题');
+                return;
+            }
+            if (hasChosenYezhen) {
+                window.location.href = '结局B.html';
+            } else {
+                alert('请先选择第一题');
+            }
+        });
+
+        // 第二题：延迟收款
+        chooseDelay.addEventListener('click', function() {
+            if (!isUnlocked) {
+                alert('请先回答最后一个问题');
+                return;
+            }
+            if (hasChosenYezhen) {
+                window.location.href = '结局C.html';
+            } else {
+                alert('请先选择第一题');
+            }
+        });
+    </script>
+</body>
+</html>

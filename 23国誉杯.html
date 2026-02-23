@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>“国誉杯”物理竞赛明日开赛</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container" style="max-width: 1000px;">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高级私立中学</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <!-- 修改后的搜索栏，添加 target="_blank" -->
+        <div class="search-bar">
+            <div class="search-group">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="输入关键词..." id="search-input">
+                    <button class="search-button" id="search-button">搜索</button>
+                </div>
+            </div>
+            <a href="09邮件.html" class="home-icon" title="返回工作台" target="_blank">🏠</a>
+        </div>
+
+        <div class="content-area">
+            <div class="back-button" onclick="history.back()">返回</div>
+
+            <div class="news-detail">
+                <div class="news-header">
+                    <h1 class="news-title">国誉杯物理竞赛明日开赛</h1>
+                    <div class="news-meta">
+                        <span>发布部门：校园新闻部</span>
+                        <span>发布日期：2025.10.27</span>
+                        <span>阅读量：3,421</span>
+                    </div>
+                </div>
+                <div class="news-content">
+                    <p>本届国誉杯物理竞赛（原全国高中生物理竞赛）将于明日在宁北市拉开帷幕，比赛分为两轮，耗时两天，全面考察选手的综合能力。</p>
+                    <p>我校派出四名优秀人才跨省赴赛，包括三名正式队员与一名替补队员。参赛队伍中的程述白与江雨薇备受关注，在去年的比赛中，二人作为主力队员助力我校斩获小组竞赛全国第一名，展现了扎实的学术实力和默契的配合。今年再度出征，希望他们延续良好状态，与队友一起再创佳绩。</p>
+                    <p>预祝参赛学子发挥出色，载誉而归！</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">28/43</span>
+    </div>
+
+    <script src="search.js"></script>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>

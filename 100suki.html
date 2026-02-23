@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>···</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 确保此页面的容器宽度与其他新闻稿一致，但不需要搜索栏 */
+        .container {
+            max-width: 800px;
+        }
+        /* 覆盖 .content-area 的内边距，使其视觉上与新闻稿正文区域一致 */
+        .content-area {
+            padding: 50px 50px 60px;
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: #FFFFFF;
+            min-height: auto;
+        }
+        /* 移除进度条，如果需要可保留，这里默认保留右下角进度 */
+        .progress-corner {
+            z-index: 1100;
+        }
+        /* 纯文字页面内容样式 */
+        .meta-message {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.9;
+            color: #3F4D5C;
+            font-size: 17px;
+        }
+        .meta-message p {
+            margin-bottom: 1.8em;
+        }
+        .meta-message .highlight {
+            color: #C49A6C;
+            font-weight: 500;
+            background-color: #F8F2E9;
+            padding: 0 4px;
+        }
+        /* 图片样式，与新闻稿中的 .news-image 保持一致 */
+        .creator-image {
+            margin: 40px 0 20px;
+            width: 30%;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #E9ECF0;
+            margin-left: auto;    /* 添加这行，使图片居中 */
+            margin-right: auto;   /* 添加这行，使图片居中 */
+        }
+        .creator-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        /* 返回按钮样式，放在左上角，与新闻稿风格一致 */
+        .simple-navigation {
+            padding: 20px 30px 0;
+            background-color: #FFFFFF;
+        }
+        .back-button-simple {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #8A9AA8;
+            font-size: 14px;
+            cursor: pointer;
+            transition: color 0.2s;
+            border: none;
+            background: none;
+            padding: 4px 0;
+            margin-bottom: 0;
+        }
+        .back-button-simple:hover {
+            color: #C49A6C;
+        }
+        .back-button-simple::before {
+            content: "←";
+            font-size: 16px;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部简单栏，与新闻稿风格统一，但不显示学校名称，只保留时间 -->
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>· · ·</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <!-- 简易导航，只保留返回按钮，位置与新闻稿的返回按钮一致 -->
+        <div class="simple-navigation">
+            <div class="back-button-simple" onclick="history.back()">返回</div>
+        </div>
+
+        <!-- 主要内容区，纯文字 + 图片 -->
+        <div class="content-area">
+            <div class="meta-message">
+                <p>你似乎触碰到了这个世界的规则之力。</p>
+                <p>噢。是原作者。</p>
+                <p>她利用<span class="highlight">【珍贵年假*10】</span>资源，在<span class="highlight">【迪普西克】</span>教授的指导下建立了这个世界，用<span class="highlight">【大脑】</span>和<span class="highlight">【黄土泥巴】</span>铸造了人物。</p>
+                <p>这算不算抄袭女娲？</p>
+                <p>她是一个平平无奇的人。</p>
+                <p>但也许你有话想要对她说。</p>
+            </div>
+
+            <!-- 图片区域，仿新闻稿样式 -->
+            <div class="creator-image">
+                <img src="https://s1.img-e.com/20260219/69970e78149f4.jpg"
+                     alt="Creator's Message"
+                     onerror="this.onerror=null; this.style.display='none'; this.insertAdjacentHTML('afterend', '<p style=\'color:#C45A6C; font-size:14px; text-align:center; padding:20px; border:1px dashed #E9ECF0; border-radius:16px;\'>🖼️ 图片未能加载，或许是她想让你自行想象。</p>');">
+            </div>
+        </div>
+    </div>
+
+    <!-- 右下角进度，保留以保持游戏一致性 -->
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">??/100</span>
+    </div>
+
+    <script src="search.js"></script>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const timeElement = document.getElementById('current-time');
+            if (timeElement) {
+                timeElement.textContent = `${hours}:${minutes}`;
+            }
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // 可以根据需要设置此页面的特殊进度，例如 "??/100" 或一个特定数字
+        const progressElement = document.getElementById('progress-value');
+        if (progressElement) {
+            // 设置为一个模糊的进度，或者如 "38/100"
+            progressElement.textContent = 'extra/100';
+        }
+    </script>
+</body>
+</html>

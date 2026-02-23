@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>结局 · 少女心情大事记</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #F1F5F9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background-color: #FFFFFF;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            border: 1px solid #E9ECF0;
+        }
+
+        /* 顶部简单栏 - 只保留右侧时间 */
+        .simple-bar {
+            background-color: #F8FAFC;
+            padding: 8px 24px;
+            border-bottom: 1px solid #E2E8F0;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            font-size: 13px;
+            color: #8A9AA8;
+        }
+
+        /* 主要内容区 */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 40px 70px;
+            background: linear-gradient(145deg, #FFFFFF 0%, #F9FBFD 100%);
+        }
+
+        .ending-badge {
+            display: block;
+            width: fit-content;
+            background-color: #4A5A6A;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 6px 18px;
+            border-radius: 40px;
+            margin: 0 auto 24px;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        /* 结局卡片 */
+        .ending-card {
+            background-color: transparent;
+            padding: 0;
+            max-width: 700px;
+            width: 100%;
+        }
+
+        /* 正文内容基础样式 - 用于开始文案和END文案 */
+        .dialogue-text {
+            font-family: '楷体', 'KaiTi', 'STKaiti', serif;
+            color: #3F4D5C;
+            line-height: 2.2;
+            font-size: 16px;
+            background-color: transparent;
+            padding-left: 70px;
+            padding-right: 40px;
+            margin-bottom: 25px;
+        }
+
+        .dialogue-text p {
+            margin-bottom: 20px;
+        }
+
+        .dialogue-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 答案专用样式 - 基础 */
+        .answer-text {
+            font-family: '楷体', 'KaiTi', 'STKaiti', serif;  /* 添加这一行 */
+            color: #3F4D5C;
+            line-height: 1.6;
+            font-size: 16px;
+            background-color: transparent;
+            padding-left: 70px;
+            padding-right: 40px;
+            margin-bottom: 60px;
+        }
+
+        /* 答案段落样式 - 默认所有p都有下边距，但可以通过特定类取消 */
+        .answer-text p {
+            font-family: '楷体', 'KaiTi', 'STKaiti', serif;  /* 添加这一行 */
+            margin-bottom: 8px;  /* 默认紧凑间距 */
+        }
+
+        .answer-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 用于需要大间距的段落 */
+        .answer-text p.spaced {
+            margin-bottom: 20px;  /* 大间距 */
+        }
+
+        /* 用于需要空行的段落（视觉上空一行） */
+        .answer-text p.empty-line {
+            margin-bottom: 30px;  /* 更大的间距，视觉上空一行 */
+        }
+
+        /* 用于完全紧贴的段落（没有间距） */
+        .answer-text p.tight {
+            margin-bottom: 2px;  /* 几乎紧贴 */
+        }
+
+        /* 问题标记样式（正常字体） */
+        .question-marker {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            font-weight: 500;
+            color: #C49A6C;
+            font-size: 16px;
+            margin: 60px 0 20px 70px;
+            padding-left: 0;
+            letter-spacing: 0.3px;
+        }
+
+        .ending-highlight {
+            font-weight: 500;
+            color: #C49A6C;
+            background-color: #F8F2E9;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* 结局标记和注释的共用底框 */
+        .ending-footer {
+            background-color: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 24px;
+            padding: 32px 32px 36px;
+            box-shadow: 0 8px 20px -8px rgba(0,0,0,0.05);
+            margin-top: 16px;
+            margin-left: 40px;
+            margin-right: 40px;
+        }
+
+        /* 结局标记 */
+        .ending-marker {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .marker-text {
+            font-size: 18px;
+            font-weight: 500;
+            color: #C49A6C;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        /* 注释文字 */
+        .ending-note {
+            text-align: center;
+            color: #8A9AA8;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .button-container {
+            text-align: center;
+            margin: 20px 0 16px;
+            position: relative;
+        }
+
+        /* 提问按钮样式 */
+        .action-btn {
+            background-color: #4A5A6A;
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #5D6F80;
+            display: inline-block;
+            min-width: 120px;
+            letter-spacing: 0.5px;
+        }
+
+        .action-btn:hover {
+            background-color: #5D6F80;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px -6px rgba(58,74,94,0.3);
+        }
+
+        .action-btn.end-btn {
+            background-color: #C49A6C;
+            border-color: #B3895C;
+        }
+
+        .action-btn.end-btn:hover {
+            background-color: #B3895C;
+        }
+
+        .action-btn.small-btn {
+            padding: 6px 20px;
+            min-width: 100px;
+            font-size: 14px;
+            margin: 10px auto;
+        }
+
+        /* 居中弹窗样式 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-container {
+            max-width: 550px;
+            width: 90%;
+            background-color: #FFFFFF;
+            border-radius: 28px;
+            box-shadow: 0 30px 60px -20px rgba(0,0,0,0.4);
+            border: 1px solid #E9ECF0;
+            overflow: hidden;
+            animation: modal-appear 0.2s ease;
+        }
+
+        @keyframes modal-appear {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 24px;
+            border-bottom: 1px solid #E9ECF0;
+            background-color: #F8FAFC;
+        }
+
+        .modal-header h3 {
+            font-size: 18px;
+            font-weight: 500;
+            color: #2C3A47;
+            margin: 0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #94A3B8;
+            transition: all 0.2s;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .modal-close:hover {
+            background-color: #F1F5F9;
+            color: #4A5A6A;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        /* 3x3 问题网格 */
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .grid-item {
+            background-color: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 40px;
+            padding: 14px 8px;
+            text-align: center;
+            font-size: 14px;
+            color: #4A5A6A;
+            cursor: pointer;
+            transition: all 0.2s;
+            word-break: break-word;
+        }
+
+        .grid-item:hover {
+            background-color: #F1F5F9;
+            border-color: #C49A6C;
+            transform: translateY(-2px);
+        }
+
+        .grid-item.used {
+            opacity: 0.4;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+
+        .counter-text {
+            text-align: center;
+            color: #8A9AA8;
+            font-size: 14px;
+            margin-top: 16px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* 累积内容容器 */
+        .accumulated-content {
+            width: 100%;
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .hero { padding: 40px 20px; }
+            .dialogue-text, .answer-text, .question-marker { 
+                padding-left: 20px; 
+                padding-right: 20px;
+                margin-left: 0;
+            }
+            .ending-footer { margin-left: 20px; margin-right: 20px; }
+            .questions-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 简化顶部栏 - 只保留右侧时间 -->
+        <div class="simple-bar">
+            <span id="current-time"></span>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="hero">
+            <!-- 结局卡片 -->
+            <div class="ending-card">
+                <span class="ending-badge">终章</span>
+
+                <!-- 累积内容容器 -->
+                <div id="accumulated-container" class="accumulated-content">
+                    <!-- 开头文案 - 一次性全部显示 -->
+                    <div id="opening-container" class="dialogue-text">
+                        <p>Farrell，你知道他就是那个把江雨薇书包扔进喷泉里的李远明。<br>与他建联的两天后，你收到了一份意料之外的邀约。</p>
+                        <p>你欣然赴约。咖啡厅靠窗的角落，少女放下漫画书，向你推来一杯冰美式。</p>
+                        <p>"没加糖。"江雨薇说。<br>"上了班的大人都爱喝这个，对吧？"</p>
+                        <p>她准许你问她三个问题。</p>
+                    </div>
+                </div>
+
+                <!-- 开始提问按钮容器 -->
+                <div class="button-container" id="start-btn-container">
+                    <button class="action-btn end-btn" id="start-question-btn">开始提问</button>
+                </div>
+
+                <!-- 继续提问按钮容器 (初始隐藏) -->
+                <div class="button-container hidden" id="continue-btn-container">
+                    <button class="action-btn end-btn" id="continue-question-btn">继续提问</button>
+                </div>
+
+                <!-- 结束提问按钮容器 (初始隐藏) -->
+                <div class="button-container hidden" id="end-btn-container">
+                    <button class="action-btn end-btn" id="end-question-btn">结束提问</button>
+                </div>
+
+                <!-- 居中弹窗（3x3问题网格） -->
+                <div class="modal-overlay hidden" id="question-modal">
+                    <div class="modal-container">
+                        <div class="modal-header">
+                            <h3>选择你要问的问题</h3>
+                            <button class="modal-close" id="modal-close">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="questions-grid">
+                                <div class="grid-item" data-q="1" data-question="你跟林泽川的关系？">你跟林泽川的关系？</div>
+                                <div class="grid-item" data-q="2" data-question="你跟程述白的关系？">你跟程述白的关系？</div>
+                                <div class="grid-item" data-q="3" data-question="你跟季言的关系？">你跟季言的关系？</div>
+                                <div class="grid-item" data-q="4" data-question="你跟叶蓁的关系？">你跟叶蓁的关系？</div>
+                                <div class="grid-item" data-q="5" data-question="为什么无法搜索季言？">为什么无法搜索季言？</div>
+                                <div class="grid-item" data-q="6" data-question="你霸凌叶蓁了吗？">你霸凌叶蓁了吗？</div>
+                                <div class="grid-item" data-q="7" data-question="叶蓁坠楼时你在场吗？">叶蓁坠楼时你在场吗？</div>
+                                <div class="grid-item" data-q="8" data-question="你推了叶蓁吗？">你推了叶蓁吗？</div>
+                                <div class="grid-item" data-q="9" data-question="你最近心情怎么样？">你最近心情怎么样？</div>
+                            </div>
+                            <div class="counter-text" id="modal-counter">已提问 0/3</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- END文案容器（初始隐藏）- 一次性全部显示 -->
+                <div id="end-container" class="hidden dialogue-text" style="margin-top: 24px;">
+                    <p>"时间不早了。"江雨薇站起身。<br>你看向窗外，落日红火。这对学生意味着一天就快要结束，但对你来说，高效沉浸的工作时间才刚刚开始。</p>
+                    <p>好吧。没关系。学生总有一天会变成工作的人。</p>
+                    <p>出了咖啡厅后你给李远明发了一封邮件，告诉他你的结论。<br>江雨薇没杀人。那可能真的只是个意外。</p>
+                    <p>李远明显然对你的工作结果不满意。他只付给你最低额度的佣金。<br>还把你拉黑了。</p>
+                    <p>滚吧！青春期男的！</p>
+                    <p>收到江清的佣金打款后，你返还了一半。毕竟你最终没有给出她想要的东西。</p>
+                    <p>后来你听说江雨薇转学了。季言和程述白的精心谋算最终还是失效了。学生们得知了江雨薇身处叶蓁坠楼现场，哗然，流言四起，政治知识全变成阴谋论。</p>
+                    <p>好吧。没关系。</p>
+                    <p>他们总有一天会变成不关心这些的人。</p>
+                </div>
+
+                <!-- 结局信息（初始隐藏） -->
+                <div id="ending-info" class="hidden" style="margin-top: 40px;">
+                    <div class="ending-footer">
+                        <div class="ending-marker">
+                            <span class="marker-text">达成结局C：【少女心情是宇宙真理】</span>
+                        </div>
+                        <div class="ending-note">
+                            少女心事可以膨胀得像宇宙那么大，然后某个瞬间塌缩，变成钻石、煤炭、钢筋……总而言之是非常坚韧的东西。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // 问题数据 - 使用HTML结构来精确控制间距
+        const answers = {
+            1: `
+                <p>“还挺明显的吧？我们是亲姐弟。”她略显诧异。“你怎么没看出来？”</p>
+                <p class="empty-line">......没有不伦之恋。江雨薇扶额。他们五岁起就分开了，林泽川跟着爸爸，林雨薇改名江雨薇跟着妈妈。</p>
+                <p>虽然不住在一起，但与彼此的竞争像两株缠到一块儿的爬藤类植物。江雨薇受母亲观念影响，将林泽川视作前半辈子最大的敌人，林泽川受父亲遗传影响，越挨骂越要凑近江雨薇。高一那年他们的关系缓和了些，因为林泽川决定转美术艺考了。他和江雨薇不再存在直接竞争关系。</p>
+                <p class="spaced">但其实他审美烂得不行。江雨薇愉快地评价。</p>
+            `,
+            
+            2: `
+                <p>江雨薇慎重地思考了一下。</p>
+                <p class="empty-line">---情人吗？</p>
+                <p>哇噻。把你吓一跳。小孩别乱用词儿。</p>
+                <p class="empty-line">江雨薇咬瘪吸管，给出一份天真无理的少女苦恼。没谈恋爱，他只是向我表白过---也不算表白？只是表达了一些情绪，但完全没想和我建立恋爱关系。我们对彼此都有一份试图珍视的感情，但谁都不愿意和对方交往。江雨薇笃定地说。他肯定不喜欢我。</p>
+                <p>不喜欢吗？你想起论坛上关于程述白“正直”的评价。可是他为你撒谎了欸。</p>
+                <p>...可能是他想让我替他写材料吧。她皱了皱鼻子，这样定论。</p>
+            `,
+            
+            3: `
+                <p>他是我的绯闻男友。因为我们经常一起表演小提琴。江雨薇故作成熟地评价。高中生就是这么无聊。</p>
+                <p class="empty-line">Nolan是真正对这个世界毫不在乎的人，我常常担心他会往教室里丢炸弹，只是因为他想听个响儿。</p>
+                <p>他帮我---不，不是因为喜欢我。Nolan有点像那种装在铜壶里的许愿精灵，你只要冲他说出要求、再给一个说得过去的理由，他就会“这样子啊”，然后帮你实现梦想。</p>
+                <p class="spaced">托他的福，我可以午休去游泳了！江雨薇看起来很幸福。</p>
+            `,
+            
+            4: `
+                <p>江雨薇一下子变得兴致缺缺。</p>
+                <p class="empty-line">我讨厌她。我是她在这个学校里的第一个朋友。</p>
+                <p>但我讨厌她。她是比我聪明得多的天才，虽然她没说，但我知道她瞧不起我的努力。她希望我用更多的时间陪她聊天，而不是背单词做题。我确实这样做了，然后班主任私下找我，告诉我叶蓁取代我成为了第一名。</p>
+                <p>我哭完不想理她，她给我发消息让我周六陪她看电影，她周日给我讲数学题。</p>
+                <p class="spaced">......我讨厌她。别说了。</p>
+            `,
+            
+            5: `
+                <p>因为他姓季。江雨薇简明扼要。</p>
+                <p class="empty-line">还不明白吗？因为他不希望自己能被搜索到。他想要、他拥有。</p>
+            `,
+            
+            6: `
+                <p>我猜到你会问我这个问题了。江雨薇支着下巴，看着马路对面。</p>
+                <p class="empty-line">我没有。我只是讨厌她，不想再跟她玩了。我让程述白和季言也不要和她玩了。仅此而已。</p>
+                <p>可是你班同学似乎都在孤立她？</p>
+                <p>因为这是一个看眼色游戏。江雨薇有些疲惫。我不能说这是我意料之外的事，甚至我从和她吵架的第一天起就在幻想这个画面。我希望她孤立无援、孤苦伶仃，哭着求我原谅，承诺再也不考比我高的分数。</p>
+                <p class="empty-line">但那样的事情并没有发生，是吧？</p>
+                <p>江雨薇不再说话。</p>
+            `,
+            
+            7: `
+                <p>在的。江雨薇说。</p>
+                <p class="empty-line">她的话变少了。</p>
+            `,
+            
+            8: `
+                <p>你发现了吧。有人为我创建了一个“不在场证明”。</p>
+                <p>但那只是糊弄学生的。入住酒店的记录会实时同步给公安。那种伎俩骗不过警察。</p>
+                <p class="empty-line">我经历了完整的调查，但是没有被抓起来。江雨薇说。你知道这意味着什么吗？</p>
+                <p>什么？她露出尖尖白白的虎牙。</p>
+                <p class="empty-line">---我无罪。</p>
+                <p>你点点头，不代表认可。那你有机会救下她吗？</p>
+                <p>没有。我力气这么小，怎么可能把她拽上来？说不定我们会一起掉下去。</p>
+                <p class="empty-line">噢。也就是说护栏断裂以后叶蓁没有立刻坠楼是吗？</p>
+                <p>....那又怎么样？我已经说了，我不可能把她拽上来！我做不到！</p>
+                <p>你当时有尝试救她吗？</p>
+                <p class="empty-line">没有！我根本就不敢靠近！这很难理解吗？我做不到这种事不是很正常吗？</p>
+                <p class="empty-line">你当时有想过救她吗？</p>
+                <p class="empty-line">江雨薇额头出了汗。刘海被打湿了。</p>
+                <p >我想过。江雨薇变得平静。</p>
+                <p class="spaced">要是她哭着求我，我就拼命把她拽上来。</p>
+                <p>但她没有。我就当这件事没发生过。</p>
+            `,
+            
+            9: `
+                <p class="empty-line">你是想问叶蓁死后我的心情怎么样吧？可能要让你失望了。</p>
+                <p class="empty-line">江雨薇凑近你，眼底闪烁着兴奋的光芒。</p>
+                <p>我根本不害怕、也不后悔，我每天都不受控制地回想那个画面，反复向自己确认她已经死了、再也不会抢走我的第一了。由此推论，我是真的很讨厌她。</p>
+                <p class="empty-line">姐姐，我很邪恶吧？</p>
+                <p>你没有给出任何回答。你觉得江雨薇的形容听上去像创伤后应激障碍。</p>
+                <p class="empty-line">但你没有说。</p>
+                <p class="spaced">你觉得这个世上不会有人带江雨薇去看心理医生。</p>
+            `
+        };
+
+        // 状态管理
+        let askedCount = 0;
+        let selectedQuestions = [];
+
+        // DOM元素
+        const accumulatedContainer = document.getElementById('accumulated-container');
+        const startBtnContainer = document.getElementById('start-btn-container');
+        const continueBtnContainer = document.getElementById('continue-btn-container');
+        const endBtnContainer = document.getElementById('end-btn-container');
+        const startQuestionBtn = document.getElementById('start-question-btn');
+        const continueQuestionBtn = document.getElementById('continue-question-btn');
+        const endQuestionBtn = document.getElementById('end-question-btn');
+        const questionModal = document.getElementById('question-modal');
+        const modalClose = document.getElementById('modal-close');
+        const gridItems = document.querySelectorAll('.grid-item');
+        const modalCounter = document.getElementById('modal-counter');
+        const endContainer = document.getElementById('end-container');
+        const endingInfo = document.getElementById('ending-info');
+
+        // 开始提问按钮点击事件
+        startQuestionBtn.addEventListener('click', function() {
+            // 隐藏开始按钮，显示问题弹窗
+            startBtnContainer.classList.add('hidden');
+            questionModal.classList.remove('hidden');
+        });
+
+        // 继续提问按钮点击事件
+        continueQuestionBtn.addEventListener('click', function() {
+            // 隐藏继续按钮，显示问题弹窗
+            continueBtnContainer.classList.add('hidden');
+            questionModal.classList.remove('hidden');
+        });
+
+        // 结束提问按钮点击事件
+        endQuestionBtn.addEventListener('click', function() {
+            // 显示END文案容器
+            endContainer.classList.remove('hidden');
+            // 显示结局信息
+            endingInfo.classList.remove('hidden');
+            // 隐藏结束按钮
+            endBtnContainer.classList.add('hidden');
+        });
+
+        // 点击×按钮关闭弹窗
+        modalClose.addEventListener('click', function() {
+            questionModal.classList.add('hidden');
+        });
+
+        // 点击背景关闭弹窗
+        questionModal.addEventListener('click', function(e) {
+            if (e.target === questionModal) {
+                questionModal.classList.add('hidden');
+            }
+        });
+
+        // 更新计数器
+        function updateCounter() {
+            modalCounter.textContent = `已提问 ${askedCount}/3`;
+        }
+
+        // 将问题和答案追加到累积区域
+        function appendQuestionAndAnswer(qNumber, questionText) {
+            // 添加问题标记（正常字体）
+            const markerDiv = document.createElement('div');
+            markerDiv.className = 'question-marker';
+            markerDiv.textContent = '问：' + questionText;
+            accumulatedContainer.appendChild(markerDiv);
+
+            // 添加答案（使用紧凑的answer-text类，内部HTML已经包含带有间距类的p标签）
+            const answerDiv = document.createElement('div');
+            answerDiv.className = 'answer-text';
+            answerDiv.innerHTML = answers[qNumber];
+            
+            accumulatedContainer.appendChild(answerDiv);
+        }
+
+        // 问题点击事件
+        gridItems.forEach(item => {
+            item.addEventListener('click', function() {
+                if (askedCount >= 3) return;
+                if (this.classList.contains('used')) return;
+                
+                const qNumber = this.getAttribute('data-q');
+                const questionText = this.getAttribute('data-question');
+                
+                // 追加问题和答案
+                appendQuestionAndAnswer(qNumber, questionText);
+                
+                // 标记问题为已用
+                this.classList.add('used');
+                
+                // 记录已选问题
+                selectedQuestions.push(qNumber);
+                askedCount++;
+                updateCounter();
+                
+                // 关闭弹窗
+                questionModal.classList.add('hidden');
+                
+                // 根据提问数量显示不同的按钮
+                if (askedCount < 3) {
+                    // 显示继续提问按钮
+                    continueBtnContainer.classList.remove('hidden');
+                } else {
+                    // 已经问了3个问题，显示结束提问按钮
+                    endBtnContainer.classList.remove('hidden');
+                }
+                
+                // 滚动到新添加的内容
+                setTimeout(() => {
+                    accumulatedContainer.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+            });
+        });
+
+        // 初始化计数器
+        updateCounter();
+    </script>
+</body>
+</html>

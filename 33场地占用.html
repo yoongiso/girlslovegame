@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>场地占用通知</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 评论区样式 */
+        .comments-section {
+            margin-top: 48px;
+            padding-top: 24px;
+        }
+
+        .comments-title {
+            font-size: 20px;
+            font-weight: 500;
+            color: #2C3A47;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .comments-title .comment-icon {
+            font-size: 20px;
+            color: #C49A6C;
+        }
+
+        .comment-item {
+            background-color: #F8FAFC;
+            border: 1px solid #E9ECF0;
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+        }
+
+        .comment-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .comment-header {
+            margin-bottom: 12px;
+        }
+
+        .comment-info {
+            flex: 1;
+        }
+
+        .comment-author {
+            font-weight: 500;
+            color: #2C3A47;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .comment-time {
+            color: #8A9AA8;
+            font-size: 12px;
+        }
+
+        .comment-content {
+            color: #3F4D5C;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .comment-content p {
+            margin-bottom: 8px;
+        }
+
+        .comment-content p:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width: 1000px;">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高级私立中学</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <!-- 搜索栏 - 与官网样式一致，带主页图标 -->
+        <div class="search-bar">
+            <div class="search-group">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="输入关键词..." id="search-input">
+                    <button class="search-button" id="search-button">搜索</button>
+                </div>
+            </div>
+            <a href="29邮件.html" class="home-icon" title="返回工作台" target="_blank">🏠</a>
+        </div>
+
+        <div class="content-area">
+            <div class="back-button" onclick="history.back()">返回</div>
+
+            <div class="news-detail">
+                <div class="news-header">
+                    <h1 class="news-title">关于“国誉杯”物理竞赛场地占用的通知</h1>
+                    <div class="news-meta">
+                        <span>发布部门：宁北一高新闻社</span>
+                        <span>发布日期：2025.10.25</span>
+                        <span>阅读量：2,156</span>
+                    </div>
+                </div>
+                <div class="news-content">
+                    <p>10月28日14-18点及10月29日8-12点，我校以下区域将作为“国誉杯”物理竞赛考场，实行封闭管理：</br>  
+                    <p>教学楼A座（1-3层）<br>
+                    科技实验楼（物理实验室）<br>
+                    阶梯教室（东区）</br>
+                    <p>请原排期在上述场地开展活动的学生组织提前调整安排，另行寻找替代场地。</p>
+                    
+                    <p>特别提醒：外校考生须凭临时通行卡由专用通道【南门】刷卡进入，一人一卡，无卡不得入内。请务必保管好卡片，切勿丢失。</p>
+                    <p>感谢配合，预祝各位考生取得优异成绩！</p>
+                </div>
+
+                <!-- 评论区 -->
+                <div class="comments-section">
+                    
+                    <div class="comment-item">
+                        <div class="comment-header">
+                            <div class="comment-info">
+                                <div class="comment-author">@路人乙</div>
+                                <div class="comment-time">10-26 09:15</div>
+                            </div>
+                        </div>
+                        <div class="comment-content">
+                            <p>求助，哪里可以补办临时通行卡？我是外省来参加物理竞赛的考生，不小心把通行卡弄丢了😭😭</p>
+                        </div>
+                    </div>
+                    
+                    <div class="comment-item">
+                        <div class="comment-header">
+                            <div class="comment-info">
+                                <div class="comment-author">@路人丙</div>
+                                <div class="comment-time">10-26 10:23</div>
+                            </div>
+                        </div>
+                        <div class="comment-content">
+                            <p>你现在补办应该来不及了，有没有替补队员？直接用他的卡进，考完跟校方老师说一声就行。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">38/100</span>
+    </div>
+
+    <script src="search.js"></script>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>

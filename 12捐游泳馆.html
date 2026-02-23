@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>帖子详情 · 圣樱高校学生论坛</title>
+    <link rel="stylesheet" href="style-forum.css">
+</head>
+<body>
+    <div class="container">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高校学生论坛</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <div class="content-area">
+            <div class="nav-bar">
+                <span class="back-link" onclick="history.back()">返回</span>
+            </div>
+
+            <div class="post-main">
+                <h1 class="post-title">校董又要大捐特捐了。。。</h1>
+                
+                <div class="post-header">
+                    <span class="author-name">帖主</span>
+                    <span class="post-meta">2025-11-29</span>
+                </div>
+                
+                <div class="post-content">
+                    <p>隔壁班班主任说的，校董好像要给学校再捐一座游泳池</p>
+                </div>
+            </div>
+
+            <div class="comments-section">
+                <div class="comments-title">全部回复 · 4条</div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">路人A</span>
+                        <span class="comment-time">2025-11-29</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>？？图书馆不是刚建完吗，怎么又要建游泳池，大佬为啥这么偏爱我们学校啊</p>
+                    </div>
+                </div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">路人B</span>
+                        <span class="comment-time">2025-11-29</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>因为他儿子在我们学校上学呗 不然呢 做慈善啊？</p>
+                    </div>
+                </div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">路人C</span>
+                        <span class="comment-time">2025-11-29</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>7班那个？</p>
+                    </div>
+                </div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">路人D</span>
+                        <span class="comment-time">2025-11-29</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>呵呵，你们以为学校没给季家好处吗？</p>
+                        <p>学生体检合作的那个安康私立医院，其实也是他们家的产业，一条龙懂不懂？</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">16/43</span>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>

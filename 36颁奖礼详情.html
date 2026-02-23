@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>帖子详情 · 圣樱高校学生论坛</title>
+    <link rel="stylesheet" href="style-forum.css">
+</head>
+<body>
+    <div class="container">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高校学生论坛</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <div class="content-area">
+            <div class="nav-bar">
+                <span class="back-link" onclick="history.back()">返回</span>
+            </div>
+
+            <div class="post-main">
+                <h1 class="post-title">昨天7班叶蓁到底干啥了急死我了</h1>
+                
+                <div class="post-header">
+                    <span class="author-name">贴主</span>
+                    <span class="post-meta">2025-07-04</span>
+                </div>
+                
+                <div class="post-content">
+                    <p>昨天请假了没去颁奖礼，到底发生啥了求求来个人给我讲讲</p>
+                </div>
+            </div>
+
+            <div class="comments-section">
+                <div class="comments-title">全部回复 · 7条</div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人A</span>
+                        <span class="comment-time">2025-07-04</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>特别震撼人心！当着全校的面把小提琴女神给踹下神坛了！</p>
+                    </div>
+                </div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人B</span>
+                        <span class="comment-time">2025-07-04</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>我怎么记得叶蓁刚转过来的时候她俩关系还挺好的？</p>
+                    </div>
+                </div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人C</span>
+                        <span class="comment-time">2025-07-04</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>不知道，玩掰了呗。她俩上学期组队参加了一个比赛，上期末评选代言人的时候还没出结果，这学期她们小组拿奖了。</p>
+                    </div>
+                </div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人C</span>
+                        <span class="comment-time">2025-07-04</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>然后今天颁奖礼，jyw她妈都发表完育儿心得了，马上要拿过奖杯时叶蓁突然冲上台说那个项目的主要创意和执行都是她负责的，但jyw把自己上报成项目主力了，有不正当加分行为。</p>
+                        <p>好死不死她们俩总分就差0.02，如果这一项真是误报的话，那真正的第一名就应该是叶蓁。</p>
+                    </div>
+                </div>
+
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人B</span>
+                        <span class="comment-time">2025-07-04</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>那叶蓁不把女神得罪死了。。。她还能有好日子过吗？</p>
+                    </div>
+                </div>
+
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人A</span>
+                        <span class="comment-time">2025-07-04</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>叶蓁成绩很好吧？老师应该也都挺喜欢她的？</p>
+                    </div>
+                </div>
+
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人C</span>
+                        <span class="comment-time">2025-07-04</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>老师喜欢有啥用…重要的是jyw身边那几个人，尤其是nolan，他要是站jyw的队，让叶蓁转学滚蛋也是一句话的事儿…</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">41/100</span>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>

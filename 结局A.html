@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>结局 · 少女心情大事记</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #F1F5F9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background-color: #FFFFFF;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            border: 1px solid #E9ECF0;
+        }
+
+        /* 顶部简单栏 - 只保留右侧时间 */
+        .simple-bar {
+            background-color: #F8FAFC;
+            padding: 8px 24px;
+            border-bottom: 1px solid #E2E8F0;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            font-size: 13px;
+            color: #8A9AA8;
+        }
+
+        /* 主要内容区 */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 40px 70px;
+            background: linear-gradient(145deg, #FFFFFF 0%, #F9FBFD 100%);
+        }
+
+        .ending-badge {
+            display: block;
+            width: fit-content;
+            background-color: #4A5A6A;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 6px 18px;
+            border-radius: 40px;
+            margin: 0 auto 24px;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        /* 结局卡片 - 移除阴影，让内部元素自己控制 */
+        .ending-card {
+            background-color: transparent;
+            padding: 0;
+            max-width: 700px;
+            width: 100%;
+        }
+
+        /* 正文内容 - 整体右移 */
+        .ending-content {
+            color: #3F4D5C;
+            line-height: 2.2;
+            font-size: 16px;
+            background-color: transparent;
+            padding-left: 70px;  /* 整体向右移动40px */
+            padding-right: 40px;  /* 右侧也加一些留白，保持平衡 */
+            margin-bottom: 36px;
+        }
+
+        .ending-content p {
+            margin-bottom: 28px;
+        }
+
+        .ending-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .ending-highlight {
+            font-weight: 500;
+            color: #C49A6C;
+            background-color: #F8F2E9;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* 结局标记和注释的共用底框 */
+        .ending-footer {
+            background-color: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 24px;
+            padding: 32px 32px 36px;
+            box-shadow: 0 8px 20px -8px rgba(0,0,0,0.05);
+            margin-top: 16px;
+            margin-left: 40px;    /* 与正文对齐，向右移动40px */
+            margin-right: 40px;    /* 右侧留白 */
+        }
+
+        /* 结局标记 */
+        .ending-marker {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .marker-text {
+            font-size: 18px;
+            font-weight: 500;
+            color: #C49A6C;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        /* 注释文字 */
+        .ending-note {
+            text-align: center;
+            color: #8A9AA8;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .hero { padding: 40px 20px; }
+            .ending-footer { 
+                padding: 24px 20px;
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+            .ending-content {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 简化顶部栏 - 只保留右侧时间 -->
+        <div class="simple-bar">
+            <span id="current-time"></span>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="hero">
+            <!-- 结局卡片（无底框） -->
+            <div class="ending-card">
+                <span class="ending-badge">终章</span>
+                <div class="ending-content">
+                    <p>你拒绝了宁北市坠楼案的委托。</p>
+                    <p>发件人IP在加拿大，说不定是境外诈骗。<br>你关掉了邮箱，告诉自己：多一事不如少一事。</p>
+                    
+                    <p>你整理好关于江雨薇被霸凌的证据，打包发给了江清。<br>三天后，你的账户收到一笔转账。金额比约定的佣金多出一倍。</p>
+                    
+                    <p>你看着那笔钱，又看看那封垃圾箱里的境外邮件。</p>
+                    <p>窗外天色蒙蒙亮，你做了一杯热拿铁，决定好好休个假。</p>
+                    
+                    <p>偶尔午夜梦回，你会想起灰暗底色的学生论坛——不过那些都不重要了。</p>
+                </div>
+
+                <!-- 底框：包含结局标记和注释（已无分割线） -->
+                <div class="ending-footer">
+                    <div class="ending-marker">
+                        <span class="marker-text">达成结局A：【故作坦然地睡去】</span>
+                    </div>
+                    <div class="ending-note">
+                        你选择了安全，也得到了回报。有些真相，也许不需要每个人都去挖。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>帖子详情 · 圣樱高校学生论坛</title>
+    <link rel="stylesheet" href="style-forum.css">
+</head>
+<body>
+    <div class="container">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高校学生论坛</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <div class="content-area">
+            <div class="nav-bar">
+                <span class="back-link" onclick="history.back()">返回</span>
+            </div>
+
+            <div class="post-main">
+                <h1 class="post-title">有人感受到程述白最近的低气压了吗？</h1>
+                
+                <div class="post-header">
+                    <span class="author-name">帖主</span>
+                    <span class="post-meta">2025-11-28</span>
+                </div>
+                
+                <div class="post-content">
+                    <p>我真哭了，面试之前跟我说他一点都不凶，进会之后差点把我吓死</p>
+                </div>
+            </div>
+
+            <div class="comments-section">
+                <div class="comments-title">全部回复 · 6条</div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人A</span>
+                        <span class="comment-time">2025-11-28</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>我猜是因为物理竞赛没拿奖吧？这个奖对他申请学校还挺重要的。</p>
+                    </div>
+                </div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人B</span>
+                        <span class="comment-time">2025-11-28</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>小提琴女神真的很好笑，非要占个组队名额，结果临阵逃脱，还说什么花生过敏…</p>
+                    </div>
+                </div>
+
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人A</span>
+                        <span class="comment-time">2025-11-28</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>还有这种事？我只知道今年是替补队员临时上场的</p>
+                    </div>
+
+                </div>
+
+                                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人C</span>
+                        <span class="comment-time">2025-11-28</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>对的，程述白亲自跟学校汇报的，说她还没出市区就过敏进医院了，感觉也是恨透她了。。。</p>
+                    </div>
+                </div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人D</span>
+                        <span class="comment-time">2025-11-29</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>今年物理竞赛的真题我怎么没搜到？</p>
+                    </div>
+                </div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人A</span>
+                        <span class="comment-time">2025-12-01</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>改名了，叫国誉杯，你搜这个试试</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">22/43</span>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>

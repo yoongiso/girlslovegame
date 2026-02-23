@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>帖子详情 · 圣樱高校学生论坛</title>
+    <link rel="stylesheet" href="style-forum.css">
+</head>
+<body>
+    <div class="container">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高校学生论坛</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <div class="content-area">
+            <div class="nav-bar">
+                <span class="back-link" onclick="history.back()">返回</span>
+            </div>
+
+            <div class="post-main">
+                <h1 class="post-title">求本次考试语文最高分作文范文</h1>
+                
+                <div class="post-header">
+                    <span class="author-name">@李远明4632</span>
+                    <span class="post-meta">2025-08-03</span>
+                </div>
+                
+                <div class="post-content">
+                    <p>听说作文是满分，求原稿</p>
+                </div>
+            </div>
+
+            <div class="comments-section">
+                <div class="comments-title">全部回复 · 1条</div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@榛子叶</span>
+                        <span class="comment-time">2025-08-05</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>怎么不直接找我啊？</p>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">23/43</span>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>

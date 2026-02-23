@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>帖子详情 · 圣樱高校学生论坛</title>
+    <link rel="stylesheet" href="style-forum.css">
+    <style>
+        /* 帖子详情页特定样式 */
+        .post-content img {
+            max-width: 100%;
+            border-radius: 12px;
+            margin: 12px 0 8px;
+            border: 1px solid #3A404B;
+            display: block;
+        }
+        
+        .comment-content img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 12px 0 4px;
+            border: 1px solid #3A404B;
+            display: block;
+        }
+        
+   
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高校学生论坛</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <div class="content-area">
+            <div class="nav-bar">
+                <span class="back-link" onclick="history.back()">返回</span>
+            </div>
+
+            <div class="post-main">
+                <h1 class="post-title">小提琴女神和林泽川是谈恋爱了吗？</h1>
+                
+                <div class="post-header">
+                    <span class="author-name">帖主</span>
+                    <span class="post-meta">2025-09-04</span>
+                </div>
+                
+                <div class="post-content">
+                    <p>他俩最近也太大胆了吧，林泽川每天都来找她，这还不算谈？</p>
+                </div>
+            </div>
+
+            <div class="comments-section">
+                <div class="comments-title">全部回复 · 3条</div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人A</span>
+                        <span class="comment-time">2025-09-04</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>她官配不是Nolan吗 小提琴男神女神~~~</p>
+                    </div>
+                </div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人B</span>
+                        <span class="comment-time">2025-09-19</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>你们没看到林泽川的霸凌处分吗。。。</p>
+                    </div>
+                </div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">路人C</span>
+                        <span class="comment-time">2025-09-21</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>能说吗，其实我感觉每次小提琴女神被林泽川叫出去时都很焦虑…</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">20/43</span>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+        
+    </script>
+</body>
+</html>

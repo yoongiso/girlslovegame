@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>程述白·学生会</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 图片样式 */
+        .news-image {
+            margin: 32px 0 8px;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #E9ECF0;
+        }
+
+        .news-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .image-caption {
+            color: #8A9AA8;
+            font-size: 13px;
+            margin-bottom: 24px;
+            text-align: right;
+            font-style: italic;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高级私立中学</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <!-- 修改后的搜索栏，添加 target="_blank" -->
+        <div class="search-bar">
+            <div class="search-group">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="输入关键词..." id="search-input">
+                    <button class="search-button" id="search-button">搜索</button>
+                </div>
+            </div>
+            <a href="01邮件.html" class="home-icon" title="返回工作台" target="_blank">🏠</a>
+        </div>
+
+        <div class="content-area">
+            <div class="back-button" onclick="history.back()">返回</div>
+
+            <div class="news-detail">
+                <div class="news-header">
+                    <h1 class="news-title">2024学年学生会换届大会顺利举行</h1>
+                    <div class="news-meta">
+                        <span>发布部门：学生会</span>
+                        <span>发布日期：2024.09.15</span>
+                        <span>阅读量：1,247</span>
+                    </div>
+                </div>
+                <div class="news-content">
+                    <p>本周五下午，圣樱高级私立中学学生会换届大会顺利举行。经过全体代表投票选举，高二（7）班的程述白当选为新一任学生会主席。</p>
+                    
+                    <p>作为新一任学生会主席，程述白表示会尽快熟悉新岗位的工作节奏，同时感谢过去一年所有成员的付出，期待在新学期与大家共同努力。</p>
+
+                    <!-- 图片区域 -->
+                    <div class="news-image">
+                        <img src="https://s1.img-e.com/20260214/699073c731052.jpg" alt="学生会换届大会礼堂">
+                    </div>
+                    <div class="image-caption">举行学生会换届大会的礼堂 摄影师：林泽川</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">8/43</span>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+    </script>
+
+    <script src="search.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圣樱高校学生论坛</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #1A1E24;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: #252A32;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            border: 1px solid #3A404B;
+            position: relative;
+        }
+
+        .simple-bar {
+            background-color: #2A2F38;
+            padding: 8px 24px;
+            border-bottom: 1px solid #3A404B;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: #A0A8B8;
+        }
+
+        .simple-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .simple-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #5D6B7A;
+            border-radius: 50%;
+        }
+
+        .search-bar {
+            padding: 30px 40px 20px;
+            background-color: #252A32;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 500px;
+            background-color: #2F3540;
+            border: 1px solid #404754;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+
+        .search-container:focus-within {
+            border-color: #8B9AAB;
+            box-shadow: 0 0 0 3px rgba(139,154,171,0.15);
+            background-color: #353C48;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            font-size: 18px;
+            color: #7A8499;
+            pointer-events: none;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 14px 16px 14px 48px;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            outline: none;
+            color: #E0E4F0;
+        }
+
+        .search-input::placeholder {
+            color: #5F6B7C;
+        }
+
+        .search-button {
+            background-color: #3A404B;
+            border: none;
+            color: #C0C8D8;
+            font-size: 15px;
+            font-weight: 400;
+            cursor: pointer;
+            padding: 10px 24px;
+            border-radius: 40px;
+            margin-right: 4px;
+            transition: all 0.2s;
+            white-space: nowrap;
+            border-left: 1px solid #4A515E;
+        }
+
+        .search-button:hover {
+            background-color: #4A515E;
+            color: #FFFFFF;
+        }
+
+        .content-area {
+            padding: 10px 40px 50px;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .forum-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .forum-title {
+            font-size: 32px;
+            font-weight: 500;
+            color: #E8ECF8;
+            letter-spacing: 1px;
+        }
+
+        .sticky-post {
+            background-color: #2F3540;
+            border: 1px solid #4A5568;
+            border-radius: 18px;
+            padding: 28px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .sticky-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #404754;
+        }
+
+        .sticky-icon {
+            background-color: #C49A6C;
+            color: #1A1E24;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 30px;
+            text-transform: uppercase;
+        }
+
+        .sticky-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: #E0E4F0;
+        }
+
+        .sticky-content {
+            color: #B0B8CC;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .sticky-content p {
+            margin-bottom: 16px;
+        }
+
+        .sticky-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .sticky-highlight {
+            font-weight: 500;
+            color: #C49A6C;
+        }
+
+        /* 热门帖子板块样式 */
+        .hot-posts-section {
+            margin-top: 30px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: #E0E4F0;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #3A404B;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title .hot-icon {
+            color: #C49A6C;
+            font-size: 20px;
+        }
+
+        .hot-posts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .hot-post-item {
+            background-color: #2A2F38;
+            border: 1px solid #3A404B;
+            border-radius: 12px;
+            padding: 16px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .hot-post-item:hover {
+            background-color: #2F3540;
+            border-color: #5A6578;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .hot-post-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #E0E4F0;
+            margin-bottom: 6px;
+        }
+
+        .hot-post-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #7A8499;
+            font-size: 12px;
+        }
+
+        .hot-post-meta .hot-badge {
+            background-color: #C49A6C;
+            color: #1A1E24;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 30px;
+            text-transform: uppercase;
+        }
+
+        .progress-corner {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #2A2F38;
+            border: 1px solid #3A404B;
+            border-radius: 40px;
+            padding: 8px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            font-size: 14px;
+            color: #8A94A8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(4px);
+            background-color: rgba(42,47,56,0.9);
+            z-index: 1100;
+        }
+
+        .progress-value {
+            font-weight: 500;
+            color: #C0C8D8;
+            background-color: #353C48;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 13px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .search-bar {
+                padding: 20px 20px 15px;
+            }
+            .content-area {
+                padding: 10px 20px 40px;
+            }
+            .forum-title {
+                font-size: 28px;
+            }
+            .sticky-post {
+                padding: 20px;
+            }
+            .hot-post-item {
+                padding: 14px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高校学生论坛</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <div class="search-bar">
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="搜索姓名或昵称" id="search-input">
+                <button class="search-button" id="search-button">搜索</button>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div class="forum-header">
+                <div class="forum-title">圣樱高校学生论坛</div>
+            </div>
+
+            <div class="sticky-post">
+                <div class="sticky-header">
+                    <span class="sticky-icon">置顶</span>
+                    <span class="sticky-title">论坛须知</span>
+                </div>
+                <div class="sticky-content">
+                    <p>1. 本论坛为校园官方交流平台，请大家共同维护良好氛围，官方管理员将不定时巡查，对不良言论进行警告或删除，情节严重者将依据校规处理；</p>
+                    <p>2. 由于服务器算力有限，论坛仅支持检索<span class="sticky-highlight">学生真实姓名</span>，其他关键词暂无法使用。如需查找特定信息，请尝试在其他网站进行搜索；</p>
+                    <p>3. 搜索<span class="sticky-highlight">账户昵称</span>可以快速跳转至该用户的主页，账户默认昵称为<span class="sticky-highlight">姓名+学号</span>，例如“张薇0312”；请大家注意保护个人信息，按需调整昵称。</p>
+                </div>
+            </div>
+
+            <!-- 新增：热门帖子板块 -->
+            <div class="hot-posts-section">
+                <div class="section-title">
+                    <span class="hot-icon">🔥</span>
+                    热门帖子
+                </div>
+                <div class="hot-posts-list">
+                    <div class="hot-post-item" onclick="window.location.href='12捐游泳馆.html'">
+                        <div class="hot-post-title">校董又要大捐特捐了。。。</div>
+                        </div>
+                    </div>
+                    <div class="hot-post-item" onclick="window.location.href='11小组分组.html'">
+                        <div class="hot-post-title">小组分组真的好烦</div>
+                        </div>
+                    </div>
+                    <div class="hot-post-item" onclick="window.location.href='13未来代言人.html'">
+                        <div class="hot-post-title">搞半天这个未来代言人还是看成绩啊？</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">15/43</span>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // 搜索功能 - 跳转到搜索结果页
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-button');
+
+        function performSearch() {
+            const keyword = searchInput.value.trim();
+            if (keyword === '') {
+                alert('请输入关键词');
+                return;
+            }
+            // 跳转到搜索结果页，传递关键词参数
+            window.location.href = `forum_search_result.html?q=${encodeURIComponent(keyword)}`;
+        }
+
+        searchButton.addEventListener('click', performSearch);
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>播客片段节选</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 播客页面特定样式 - 与新闻稿区分 */
+        .podcast-tag {
+            display: inline-block;
+            background-color: #4A5A6A;
+            color: white;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 30px;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .podcast-header {
+            margin-bottom: 28px;
+        }
+
+        .podcast-title {
+            font-size: 32px;
+            font-weight: 500;
+            color: #2C3A47;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .podcast-meta {
+            color: #8A9AA8;
+            font-size: 14px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #E9ECF0;
+        }
+
+        .podcast-content {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.8;
+            color: #3F4D5C;
+            font-size: 16px;
+        }
+
+        /* 主持人问题样式 - 斜体楷体 */
+        .host-question {
+            margin: 28px 0 20px;
+        }
+
+        .host-question .speaker {
+            font-weight: 600;
+            color: #4A5A6A;
+            margin-bottom: 8px;
+            font-size: 15px;
+            letter-spacing: 0.3px;
+        }
+
+        .host-question .text {
+            font-family: '楷体', 'KaiTi', 'STKaiti', serif;
+            font-style: italic;
+            color: #2C3A47;
+            font-size: 16px;
+            line-height: 1.7;
+            padding-left: 20px;
+            border-left: 2px solid #E2D5C0;
+        }
+
+        /* 江清回答样式 - 极简朴素，无竖杠无破折号 */
+        .guest-answer {
+            margin: 20px 0 28px 0;
+        }
+
+        .guest-answer .speaker {
+            font-weight: 600;
+            color: #4A5A6A;
+            margin-bottom: 8px;
+            font-size: 15px;
+            letter-spacing: 0.3px;
+        }
+
+        .guest-answer .text {
+            color: #3F4D5C;
+            font-size: 16px;
+            line-height: 1.8;
+            padding-left: 0;
+        }
+
+        .host-note {
+            background-color: #F8FAFC;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin: 20px 0;
+            font-size: 14px;
+            color: #6A7488;
+            border: 1px solid #E9ECF0;
+        }
+
+        .host-note::before {
+            font-weight: 500;
+            color: #4A5A6A;
+            margin-right: 4px;
+        }
+
+        .emphasis {
+            font-weight: 500;
+            color: #C49A6C;
+            background-color: #F8F2E9;
+            padding: 0 4px;
+        }
+
+        .back-button {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width: 1000px;">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高级私立中学</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <!-- 搜索栏 - 与官网样式一致，带主页图标 -->
+        <div class="search-bar">
+            <div class="search-group">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="输入关键词..." id="search-input">
+                    <button class="search-button" id="search-button">搜索</button>
+                </div>
+            </div>
+            <a href="29邮件.html" class="home-icon" title="返回工作台" target="_blank">🏠</a>
+        </div>
+
+        <div class="content-area">
+            <div class="back-button" onclick="history.back()">返回</div>
+
+            <div class="podcast-header">
+                <span class="podcast-tag">“女子气”女性专访系列</span>
+                <h1 class="podcast-title">播客片段节选丨从单亲妈妈到集团总裁</h1>
+                <div class="podcast-meta">
+                    <span>平台：《不重要电台》</span>
+                    <span style="margin-left: 24px;">撰稿人：小卢</span>
+                    <span style="margin-left: 24px;">发布日期：2024.08.10</span>
+                </div>
+            </div>
+
+            <div class="podcast-content">
+                <div class="host-note">
+                    本期节目邀请到知名企业家-雨泽集团CEO江清女士，聊她从单亲妈妈到集团总裁的心路历程。
+                </div>
+
+                <!-- 主持人问题1 - 斜体楷体 -->
+                <div class="host-question">
+                    <div class="speaker">主持人</div>
+                    <div class="text">听说您最近主导创意的家庭保险宣传片效果反响很好，也得到了业内的认可，这支片子的灵感是从何而来呢？</div>
+                </div>
+
+                <!-- 江清回答1 - 极简朴素，无竖杠 -->
+                <div class="guest-answer">
+                    <div class="speaker">雨泽集团CEO·江清</div>
+                    <div class="text">灵感来源其实是我自己。我很早就离了婚，跟女儿一起生活，前几年我的家庭和事业都频繁动荡，我在其中周旋时常常有感到无力、疲惫的时刻，这个项目跟合作方聊完后我就在深夜把自己关在之前的小办公室里，回忆那时的心境，可能正好是这样的经历使我能够与我们的目标用户高度共情，算是比较顺利地推进了这个创意。</div>
+                </div>
+
+                <!-- 主持人问题2 - 斜体楷体 -->
+                <div class="host-question">
+                    <div class="speaker">主持人</div>
+                    <div class="text">一直都听说你女儿非常优秀，那她在家庭比较动荡的时期有没有过一些对您的误解、或者争吵矛盾呢？</div>
+                </div>
+
+                <!-- 江清回答2 - 极简朴素，无竖杠 -->
+                <div class="guest-answer">
+                    <div class="speaker">雨泽集团CEO·江清</div>
+                    <div class="text">我女儿从小就非常要强，是天生就自尊心很高的孩子。我从离婚后就投注很多精力在孩子的培养上，背着几百万负债的时候我仍然再给她找全市最好的小提琴老师上课，她的优秀背后砸了普通人想都不敢想的资金，我虽然没能给她一个完整的家庭，但我可以说她的生活水平绝对超过了这个城市百分之九十九的孩子。最近几年我事业很忙，跟她相处的机会不多，所以也没什么争吵的机会，我对她只有一个要求：不能比我前夫带走的孩子差，这是绝对的底线。</div>
+                </div>
+
+                <!-- 主持人问题3 - 斜体楷体 -->
+                <div class="host-question">
+                    <div class="speaker">雨泽集团CEO·江清</div>
+                    <div class="text">（笑）您这算是把竞争心转移到了孩子们之间？</div>
+                </div>
+
+                <!-- 江清回答3 - 极简朴素，无竖杠 -->
+                <div class="guest-answer">
+                    <div class="speaker">江清</div>
+                    <div class="text">我不能让任何人有机会说，跟着妈妈的孩子就是不如跟着爸爸的。所以我对她要求高，我女儿必须优秀，这不是我狠心，是这个社会就这样，你不拿出点东西来，别人就会看低你。</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">40/100</span>
+    </div>
+
+    <script src="search.js"></script>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>

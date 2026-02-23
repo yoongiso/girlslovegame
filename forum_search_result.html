@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜索结果 · 圣樱高校学生论坛</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #1A1E24;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background-color: #252A32;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            border: 1px solid #3A404B;
+            position: relative;
+        }
+
+        /* 顶部简单栏 */
+        .simple-bar {
+            background-color: #2A2F38;
+            padding: 8px 24px;
+            border-bottom: 1px solid #3A404B;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: #A0A8B8;
+        }
+
+        .simple-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .simple-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #5D6B7A;
+            border-radius: 50%;
+        }
+
+        /* 内容区 */
+        .content-area {
+            padding: 30px 40px 50px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* 返回按钮 */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #8A94A8;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 24px;
+            transition: color 0.2s;
+            border: none;
+            background: none;
+            padding: 4px 0;
+        }
+
+        .back-link:hover {
+            color: #C49A6C;
+        }
+
+        .back-link::before {
+            content: "←";
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        /* 搜索结果头部 */
+        .result-header {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #3A404B;
+        }
+
+        .result-title {
+            font-size: 20px;
+            font-weight: 500;
+            color: #E8ECF8;
+            margin-bottom: 8px;
+        }
+
+        .result-count {
+            color: #8A94A8;
+            font-size: 14px;
+        }
+
+        .result-count span {
+            color: #C49A6C;
+            font-weight: 500;
+        }
+
+        /* 搜索结果列表 */
+        .result-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .result-item {
+            background-color: #2A2F38;
+            border: 1px solid #3A404B;
+            border-radius: 14px;
+            padding: 18px 22px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .result-item:hover {
+            background-color: #2F3540;
+            border-color: #5A6578;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px -6px rgba(0,0,0,0.3);
+        }
+
+        .result-item-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: #E0E4F0;
+            margin-bottom: 8px;
+        }
+
+        .result-item-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #7A8499;
+            font-size: 13px;
+        }
+
+        .result-item-keyword {
+            background-color: #353C48;
+            color: #C49A6C;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 12px;
+        }
+
+        /* 无结果提示 */
+        .no-result {
+            text-align: center;
+            padding: 60px 20px;
+            color: #8A94A8;
+            font-size: 16px;
+            background-color: #2A2F38;
+            border: 1px dashed #4A5568;
+            border-radius: 18px;
+        }
+
+        .no-result .suggestions {
+            color: #C49A6C;
+            margin-top: 16px;
+            font-size: 14px;
+        }
+
+        .no-result .suggestions span {
+            background-color: #353C48;
+            padding: 4px 12px;
+            border-radius: 30px;
+            margin: 0 4px;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .no-result .suggestions span:hover {
+            background-color: #4A515E;
+            color: #FFFFFF;
+        }
+
+        /* 深色风险警告样式 */
+        .warning-container {
+            background-color: #2A1F1F;
+            border: 1px solid #C45A6C;
+            border-radius: 18px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(196, 90, 108, 0.2);
+        }
+
+        .warning-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #C45A6C;
+        }
+
+        .warning-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #C45A6C;
+            margin-bottom: 16px;
+        }
+
+        .warning-message {
+            font-size: 16px;
+            color: #B0B8CC;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* 进度条 */
+        .progress-corner {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #2A2F38;
+            border: 1px solid #3A404B;
+            border-radius: 40px;
+            padding: 8px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            font-size: 14px;
+            color: #8A94A8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(4px);
+            background-color: rgba(42,47,56,0.9);
+            z-index: 1100;
+        }
+
+        .progress-value {
+            font-weight: 500;
+            color: #C0C8D8;
+            background-color: #353C48;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 13px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 700px) {
+            .content-area {
+                padding: 20px 20px 30px;
+            }
+            .result-item-meta {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .warning-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高校学生论坛</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <div class="content-area">
+            <!-- 返回按钮 -->
+            <div class="back-link" onclick="history.back()">返回论坛首页</div>
+
+            <!-- 搜索结果头部会通过JS动态填充 -->
+            <div class="result-header" id="result-header">
+                <div class="result-title" id="result-title">搜索“”</div>
+                <div class="result-count" id="result-count">找到 <span>0</span> 个相关帖子</div>
+            </div>
+
+            <!-- 搜索结果列表会通过JS动态填充 -->
+            <div class="result-list" id="result-list"></div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">13/100</span>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // 风险关键词列表（深色版）
+        const riskKeywords = ['季言', 'nolan'];
+
+        // 从URL获取搜索关键词
+        const urlParams = new URLSearchParams(window.location.search);
+        const keyword = urlParams.get('q') || '';
+        
+        // 特殊关键词直接跳转（保持原有逻辑）
+        if (keyword === '林泽川1399') {
+            window.location.href = '26林泽川主页.html';
+        }
+        if (keyword === '李远明4632') {
+            window.location.href = '39李远明主页.html';
+        }
+        if (keyword === '榛子叶') {
+            window.location.href = '40榛子叶主页.html';
+        }
+        
+        // 更新头部
+        document.getElementById('result-title').textContent = `搜索“${keyword}”`;
+        
+        // 检查是否为风险关键词（不区分大小写）
+        const lowerKeyword = keyword.toLowerCase();
+        const isRiskKeyword = riskKeywords.some(risk => 
+            risk === keyword || // 直接匹配中文
+            (risk === 'nolan' && lowerKeyword === 'nolan') // Nolan不区分大小写
+        );
+        
+        const resultList = document.getElementById('result-list');
+        
+        if (isRiskKeyword) {
+            // 显示深色风险警告
+            resultList.innerHTML = `
+                <div class="warning-container">
+                    <div class="warning-icon">⚠️</div>
+                    <div class="warning-title">风险警告</div>
+                    <div class="warning-message">
+                        您当前的搜索存在高度风险，若频繁触发风控，我们将拦截您的访问
+                    </div>
+                </div>
+            `;
+            // 隐藏结果计数
+            document.getElementById('result-count').style.display = 'none';
+        } else {
+            // 正常搜索匹配的帖子
+            // 帖子数据映射表
+            const postData = [
+                { keyword: "林泽川", title: "江雨薇和林泽川是谈恋爱了吗？", page: "14林泽川处分.html" },
+                { keyword: "江雨薇", title: "今天没来颁奖礼的简直错过一个亿", page: "15圣樱大礼堂.html" },
+                { keyword: "程述白", title: "学生会面试严格吗？主席凶不凶？", page: "16学生会面试.html" },
+                { keyword: "程述白", title: "有人感受到程述白最近的低气压了吗？", page: "17竞赛失利.html" },
+                { keyword: "李远明", title: "求本次考试语文最高分作文范文", page: "18作文范文.html" },
+                { keyword: "李远明", title: "求数学题思路", page: "20数学题.html" },
+                { keyword: "李远明", title: "每天看李远明学习那么努力…", page: "19李远明努力.html" },
+                { keyword: "赵子安", title: "赵子安离职了？？？", page: "27赵子安.html" },
+                { keyword: "叶蓁", title: "昨天7班叶蓁到底干啥了急死我了", page: "36颁奖礼详情.html" },
+                { keyword: "叶蓁", title: "7班现在啥情况，真搞上孤立了？", page: "37叶蓁情况.html" }
+            ];
+            
+            // 过滤出匹配的帖子
+            const matches = postData.filter(item => 
+                item.keyword === keyword
+            );
+            
+            const countSpan = document.querySelector('#result-count span');
+            countSpan.textContent = matches.length;
+            document.getElementById('result-count').style.display = 'block';
+            
+            if (matches.length > 0) {
+                // 显示搜索结果
+                matches.forEach(match => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'result-item';
+                    itemDiv.innerHTML = `
+                        <div class="result-item-title">${match.title}</div>
+                        <div class="result-item-meta">
+                        </div>
+                    `;
+                    itemDiv.addEventListener('click', function() {
+                        window.location.href = match.page;
+                    });
+                    resultList.appendChild(itemDiv);
+                });
+            } else {
+                resultList.innerHTML = '<div class="no-result">未找到相关帖子</div>';
+            }
+        }
+        
+        // 推荐关键词点击搜索
+        window.searchSuggestion = function(suggestion) {
+            window.location.href = `forum_search_result.html?q=${encodeURIComponent(suggestion)}`;
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宁北市长季酒店盛大开业</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container" style="max-width: 1000px;">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高级私立中学</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <!-- 搜索栏 - 与官网样式一致，带主页图标 -->
+        <div class="search-bar">
+            <div class="search-group">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="输入关键词..." id="search-input">
+                    <button class="search-button" id="search-button">搜索</button>
+                </div>
+            </div>
+            <a href="29邮件.html" class="home-icon" title="返回工作台" target="_blank">🏠</a>
+        </div>
+
+        <div class="content-area">
+            <div class="back-button" onclick="history.back()">返回</div>
+
+            <div class="news-detail">
+                <div class="news-header">
+                    <h1 class="news-title">宁北市长季酒店盛大开业</h1>
+                    <div class="news-meta">
+                        <span>发布部门：外部新闻</span>
+                        <span>发布日期：2025.03.18</span>
+                        <span>阅读量：2,847</span>
+                    </div>
+                </div>
+                <div class="news-content">
+                    <p>近日，位于宁北市核心地段的长季酒店正式开业迎宾。该酒店由知名企业季氏集团投资打造，是其在宁北市投资建设的第四家酒店项目。</p>
+                    
+                    <p>作为集商务、会议、休闲于一体的高端酒店，长季酒店的开业将进一步丰富宁北市的商业配套资源，为区域发展注入新的活力。季氏集团相关负责人表示，将继续深耕宁北市场，以高品质服务助力城市形象提升。</p>
+                    
+                    <!-- 插入图片 -->
+                    <div class="news-image">
+                        <img src="https://s1.img-e.com/20260219/699692c40448b.jpg" alt="长季酒店">
+                    </div>
+                    <div class="image-caption">长季酒店开业现场</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">35/100</span>
+    </div>
+
+    <script src="search.js"></script>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>

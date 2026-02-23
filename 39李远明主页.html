@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人主页-李远明</title>
+    <link rel="stylesheet" href="style-forum.css">
+    <style>
+        /* 个人主页特定样式 */
+        
+        /* 返回按钮（保持与论坛一致） */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #8A94A8;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: color 0.2s;
+            border: none;
+            background: none;
+            padding: 4px 0;
+        }
+        
+        .back-link:hover {
+            color: #C49A6C;
+        }
+        
+        .back-link::before {
+            content: "←";
+            font-size: 16px;
+            line-height: 1;
+        }
+        
+        /* 个人资料卡片 */
+        .profile-card {
+            background-color: #2A2F38;
+            border: 1px solid #3A404B;
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        /* 头像区域 */
+        .avatar-container {
+            flex-shrink: 0;
+        }
+        
+        .avatar {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #3A404B, #4A5568);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #E0E4F0;
+            font-size: 28px;  /* 字体也相应缩小 */
+            font-weight: 500;
+            border: 2px solid #C49A6C;  /* 边框稍微变细 */
+            box-shadow: 0 4px 12px rgba(196,154,108,0.2);
+        }
+        
+        /* 用户信息区域 */
+        .user-info {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .user-name-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .user-nickname {
+            font-size: 22px;
+            font-weight: 600;
+            color: #E8ECF8;
+        }
+        
+        .user-id {
+            color: #8A94A8;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        
+        /* 分隔标题 */
+        .section-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: #E0E4F0;
+            margin: 30px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #3A404B;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .section-title .title-icon {
+            color: #C49A6C;
+            font-size: 20px;
+        }
+        
+        /* 动态列表 */
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        
+        .activity-item {
+            background-color: #2A2F38;
+            border: 1px solid #3A404B;
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.2s;
+        }
+        
+        .activity-item:hover {
+            border-color: #5A6578;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .activity-type {
+            background-color: #353C48;
+            color: #C49A6C;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-weight: 500;
+        }
+        
+        .activity-time {
+            color: #6A7488;
+            font-size: 12px;
+        }
+        
+        .activity-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #E0E4F0;
+            margin-bottom: 8px;
+        }
+        
+        .activity-preview {
+            color: #8A94A8;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+        
+        .activity-link {
+            color: #C49A6C;
+            font-size: 13px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.2s;
+        }
+        
+        .activity-link:hover {
+            color: #E0B88C;
+        }
+        
+        .activity-link::after {
+            content: "→";
+            font-size: 14px;
+        }
+        
+        /* 文章卡片（与动态类似但稍小） */
+        .article-item {
+            background-color: #2A2F38;
+            border: 1px solid #3A404B;
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+        
+        .article-item:hover {
+            border-color: #5A6578;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .article-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #E0E4F0;
+            margin-bottom: 8px;
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #7A8499;
+            font-size: 13px;
+        }
+        
+        
+        .empty-state {
+            background-color: #2A2F38;
+            border: 1px dashed #4A5568;
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            color: #7A8499;
+            font-size: 15px;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 600px) {
+            .profile-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+            
+            .user-name-row {
+                justify-content: center;
+            }
+            
+            .user-bio {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高校学生论坛</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <div class="content-area">
+            <!-- 返回按钮 -->
+            <div class="back-link" onclick="history.back()">返回论坛</div>
+
+            <!-- 个人资料卡片 -->
+            <div class="profile-card">
+                <div class="avatar-container">
+                    <div class="avatar">LYM</div>
+                </div>
+                <div class="user-info">
+                    <div class="user-name-row">
+                        <span class="user-nickname">@李远明4632</span>
+                        <!-- 移除了 user-badge -->
+                    </div>
+                    <div class="user-id">已认证 - 高三(7)班</div>
+                    <!-- 移除了 user-bio -->
+                    <!-- 移除了 user-stats -->
+                </div>
+            </div>
+
+            <!-- 个人动态 -->
+            <div class="section-title">
+                <span class="title-icon">📋</span>
+                个人动态
+            </div>
+            
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-header">
+                        <span class="activity-type">发表动态</span>
+                        <span class="activity-time">2026-01-30</span>
+                    </div>
+                    <div class="activity-title">byebye</div>
+                    <div class="activity-preview">
+                        暂时和这个地方告别吧。
+                    </div>
+                </div>
+                
+            <div class="activity-item">
+                <div class="activity-header">
+                    <span class="activity-type">发表动态</span>
+                    <span class="activity-time">2025-09-10</span>
+                    </div>
+                    <div class="activity-title">今年的目标</div>
+                    <div class="activity-preview">
+                        希望我能成为像你一样优秀的人。
+                    </div>
+                </div>
+
+            <div class="activity-item">
+                <div class="activity-header">
+                    <span class="activity-type">发表动态</span>
+                    <span class="activity-time">2025-08-09</span>
+                    </div>
+                    <div class="activity-title">求数学题思路</div>
+                    <div class="activity-preview">
+                        尝试了一下速解法，没算出来，有人能帮忙看看思路吗？
+                    </div>
+                </div>
+
+            <div class="activity-item">
+                <div class="activity-header">
+                    <span class="activity-type">发表动态</span>
+                    <span class="activity-time">2025-08-03</span>
+                    </div>
+                    <div class="activity-title">求本次考试语文最高分作文范文</div>
+                    <div class="activity-preview">
+                        听说作文是满分，求原稿
+                    </div>
+                </div>
+  
+
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">extra/43</span>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>

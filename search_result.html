@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜索结果 · 少女心情大事记</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #F1F5F9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background-color: #FFFFFF;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            border: 1px solid #E9ECF0;
+        }
+
+        .simple-bar {
+            background-color: #F8FAFC;
+            padding: 8px 24px;
+            border-bottom: 1px solid #E2E8F0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: #8A9AA8;
+        }
+
+        .simple-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .simple-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #94A3B8;
+            border-radius: 50%;
+        }
+
+        .content-area {
+            padding: 30px 50px 50px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #8A9AA8;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: color 0.2s;
+            border: none;
+            background: none;
+            padding: 4px 0;
+        }
+
+        .back-button:hover {
+            color: #C49A6C;
+        }
+
+        .back-button::before {
+            content: "←";
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        .result-header {
+            font-size: 18px;
+            color: #2C3A47;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #E9ECF0;
+        }
+
+        .result-header span {
+            color: #C49A6C;
+            font-weight: 500;
+        }
+
+        .result-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .result-item {
+            padding: 16px 20px;
+            background-color: #F8FAFC;
+            border: 1px solid #E9ECF0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .result-item:hover {
+            background-color: #F1F5F9;
+            border-color: #C49A6C;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px -6px rgba(0,0,0,0.05);
+        }
+
+        .result-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #2C3A47;
+            margin-bottom: 6px;
+        }
+
+        .result-meta {
+            font-size: 13px;
+            color: #8A9AA8;
+        }
+
+        .no-result {
+            text-align: center;
+            padding: 60px 20px;
+            color: #8A9AA8;
+            font-size: 16px;
+            background-color: #F8FAFC;
+            border-radius: 16px;
+            border: 1px dashed #E9ECF0;
+        }
+
+        /* 风险警告样式 */
+        .warning-container {
+            background-color: #FFF5F5;
+            border: 1px solid #FECACA;
+            border-radius: 16px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(196, 90, 108, 0.1);
+        }
+
+        .warning-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #C45A6C;
+        }
+
+        .warning-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #C45A6C;
+            margin-bottom: 16px;
+        }
+
+        .warning-message {
+            font-size: 16px;
+            color: #4A5A6A;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
+        .progress-corner {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #FFFFFF;
+            border: 1px solid #E9ECF0;
+            border-radius: 40px;
+            padding: 8px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            font-size: 14px;
+            color: #8A9AA8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(4px);
+            background-color: rgba(255,255,255,0.9);
+            z-index: 1100;
+        }
+
+        .progress-value {
+            font-weight: 500;
+            color: #4A5A6A;
+            background-color: #F1F5F9;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 700px) {
+            .content-area {
+                padding: 20px;
+            }
+            .warning-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高级私立中学</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <div class="content-area">
+            <div class="back-button" onclick="history.back()">返回</div>
+
+            <div class="result-header">
+                搜索 <span id="search-keyword"></span> 的结果
+            </div>
+
+            <div class="result-list" id="result-list">
+                <!-- 搜索结果会动态填充到这里 -->
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">1/100</span>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // 风险关键词列表
+        const riskKeywords = ['季言', 'nolan','Nolan','NOLAN','季氏集团'];
+
+        // 搜索数据映射表
+        const searchData = [
+            { keyword: "未来代言人", label: "“未来代言人”选拔结果公布", page: "02未来代言人.html" },
+            { keyword: "江雨薇", label: "“未来代言人”选拔结果公布", page: "02未来代言人.html" },
+            { keyword: "江雨薇", label: "全国高中生物理竞赛团体金奖", page: "03物理竞赛.html" },
+            { keyword: "程述白", label: "全国高中生物理竞赛团体金奖", page: "03物理竞赛.html" },
+            { keyword: "程述白", label: "学生会换届大会顺利举行", page: "04学生会主席.html" },
+            { keyword: "林泽川", label: "摄影部部长任命书", page: "05林泽川任命书.html" },
+            { keyword: "红鸟班", label: "红鸟班期末作品展", page: "06红鸟班.html" },
+            { keyword: "远洋计划", label: "2025年国际交流“远洋计划”名单", page: "07远洋计划.html" },
+            { keyword: "“远洋计划”", label: "2025年国际交流“远洋计划”名单", page: "07远洋计划.html" },
+            { keyword: "李远明", label: "2023李远明心愿卡", page: "08李远明心愿卡.html" },
+            { keyword: "安康私立医院", label: "春季学期学生体检结果通知", page: "21安康私立医院.html" },
+            { keyword: "圣樱二部大礼堂", label: "期末颁奖礼将于明日举行", page: "22圣樱二部大礼堂.html" },
+            { keyword: "国誉杯", label: "国誉杯物理竞赛明日开赛", page: "23国誉杯.html" },
+            { keyword: "霸凌处分", label: "违纪处分通报-林泽川", page: "24霸凌处分.html" },
+            { keyword: "霸凌", label: "违纪处分通报-林泽川", page: "24霸凌处分.html" },
+            { keyword: "学生交响乐团", label: "活动室使用登记表", page: "28校交响乐团.html" },
+            { keyword: "长季酒店", label: "宁北市长宁酒店盛大开业", page: "30酒店开业.html" },
+            { keyword: "长季酒店", label: "关于长季酒店意外坠楼事故的情况说明", page: "31酒店坠楼.html" },
+            { keyword: "雨泽集团", label: "播客片段节选丨从单亲妈妈到集团总裁", page: "35播客节选.html" },
+            { keyword: "宁北一高", label: "宁北一高智慧校园升级", page: "32门禁系统.html" },
+            { keyword: "宁北一高新闻社", label: "宁北一高智慧校园升级", page: "32门禁系统.html" },
+            { keyword: "宁北一高新闻社", label: "关于“国誉杯”物理竞赛场地占用的通知", page: "33场地占用.html" },
+            { keyword: "宁北一高新闻社", label: "秋高气爽迎盛会，物理英才聚一中", page: "34现场播报.html" },
+        ];
+
+        // 从URL获取关键词参数
+        const urlParams = new URLSearchParams(window.location.search);
+        const keyword = urlParams.get('q') || '';
+                
+        document.getElementById('search-keyword').textContent = `“${keyword}”`;
+
+        const lowerKeyword = keyword.toLowerCase();
+        const isRiskKeyword = riskKeywords.some(risk => 
+            risk === keyword || // 直接匹配（保留季言的中文匹配）
+            (risk === 'nolan' && lowerKeyword === 'nolan') // Nolan不区分大小写
+        );
+
+        // 检查是否为风险关键词
+        if (riskKeywords.includes(keyword)) {
+            // 显示风险警告
+            const resultList = document.getElementById('result-list');
+            resultList.innerHTML = `
+                <div class="warning-container">
+                    <div class="warning-icon">⚠️</div>
+                    <div class="warning-title">风险警告</div>
+                    <div class="warning-message">
+                        您当前的搜索存在高度风险，若频繁触发风控，我们将拦截您的访问
+                    </div>
+                </div>
+            `;
+        } else {
+            // 正常搜索匹配的结果
+            const matches = searchData.filter(item => 
+                item.keyword === keyword
+            );
+
+            const resultList = document.getElementById('result-list');
+
+            if (matches.length > 0) {
+                matches.forEach(match => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'result-item';
+                    itemDiv.innerHTML = `
+                        <div class="result-title">${match.label}</div>
+                        <div class="result-meta">关键词：${match.keyword}</div>
+                    `;
+                    itemDiv.addEventListener('click', function() {
+                        window.location.href = match.page;
+                    });
+                    resultList.appendChild(itemDiv);
+                });
+            } else {
+                resultList.innerHTML = '<div class="no-result">未找到相关结果，请尝试其他关键词</div>';
+            }
+        }
+
+        // 注意：搜索结果页不再有搜索框，所以没有搜索功能代码
+    </script>
+</body>
+</html>

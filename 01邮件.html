@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工作台</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+
+        .workspace {
+            display: flex;
+            flex-direction: column;
+            min-height: 700px;
+            position: relative;
+            width: 100%;  /* 添加这一行 */
+        }
+
+        .main-panel {
+            display: flex;
+            flex: 1;
+            min-height: 600px;
+            width: 100%;  /* 添加这一行 */
+        }
+
+        .left-sidebar {
+            width: 200px;
+            border-right: 1px solid #E9ECF0;
+            background-color: #F8FAFC;
+            padding: 30px 0;
+        }
+
+        .tab-item {
+            padding: 14px 24px;
+            font-size: 15px;
+            color: #64748B;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+            margin-bottom: 4px;
+        }
+
+        .tab-item.active {
+            background-color: #FFFFFF;
+            color: #2C3A47;
+            border-left: 3px solid #C49A6C;
+            font-weight: 500;
+        }
+
+        .tab-item:hover:not(.active) {
+            background-color: #F1F5F9;
+            color: #4A5A6A;
+        }
+
+        .content-area {
+            flex: 1;
+            background-color: #FFFFFF;
+            padding: 30px !important;  /* 强制使用30px */
+            position: relative;
+            overflow-y: auto;
+            max-height: 700px;
+            max-width: none !important;  /* 取消宽度限制 */
+            margin: 0 !important;        /* 取消居中 */
+        }
+
+        .mail-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 800px;
+        }
+
+        .mail-item {
+            display: grid;
+            grid-template-columns: 200px 180px 1fr 80px;
+            padding: 16px 20px;
+            background-color: #F8FAFC;
+            border: 1px solid #E9ECF0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            align-items: center;
+        }
+
+        .mail-item:hover {
+            background-color: #F1F5F9;
+            border-color: #C49A6C;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+
+        .mail-subject {
+            font-weight: 500;
+            color: #2C3A47;
+        }
+
+        .mail-from {
+            color: #64748B;
+        }
+
+        .mail-to {
+            color: #8A9AA8;
+            font-size: 13px;
+        }
+
+        .mail-date {
+            color: #94A3B8;
+            font-size: 13px;
+            text-align: right;
+        }
+
+        .school-header {
+            font-size: 24px;
+            font-weight: 500;
+            color: #2C3A47;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #E2D5C0;
+            letter-spacing: 0.5px;
+        }
+
+        .intro-section {
+            background-color: #F8FAFC;
+            border-radius: 18px;
+            padding: 28px;
+            margin-bottom: 36px;
+            border: 1px solid #E9ECF0;
+            line-height: 1.8;
+            color: #3F4D5C;
+            font-size: 15px;
+        }
+
+        .intro-section p {
+            margin-bottom: 18px;
+        }
+
+        .intro-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .announcement-title {
+            font-size: 20px;
+            font-weight: 500;
+            color: #2C3A47;
+            margin-bottom: 20px;
+        }
+
+        .announcement-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .announcement-item {
+            padding: 16px 20px;
+            background-color: #F8FAFC;
+            border: 1px solid #E9ECF0;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 16px;
+            color: #2C3A47;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .announcement-item:hover {
+            background-color: #F1F5F9;
+            border-color: #C49A6C;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px -6px rgba(0,0,0,0.05);
+        }
+
+        .announcement-badge {
+            background-color: #E2D5C0;
+            color: #4A5A6A;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-weight: 500;
+        }
+
+        .announcement-date {
+            color: #8A9AA8;
+            font-size: 13px;
+            margin-left: auto;
+        }
+
+        .notice-detail {
+            max-width: 800px;
+        }
+
+        .notice-detail h2 {
+            font-size: 24px;
+            font-weight: 500;
+            color: #2C3A47;
+            margin-bottom: 16px;
+        }
+
+        .notice-meta {
+            color: #8A9AA8;
+            font-size: 14px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #E9ECF0;
+        }
+
+        .notice-content {
+            line-height: 1.8;
+            color: #3F4D5C;
+            font-size: 15px;
+        }
+
+        .notice-content p {
+            margin-bottom: 20px;
+        }
+
+        .back-link {
+            margin-top: 32px;
+            color: #C49A6C;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* 邮件弹窗样式 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(3px);
+        }
+
+        .modal-container {
+            max-width: 650px;
+            width: 90%;
+            background-color: #FFFFFF;
+            border-radius: 28px;
+            box-shadow: 0 30px 60px -20px rgba(0,0,0,0.3);
+            border: 1px solid #E9ECF0;
+            overflow: hidden;
+            animation: modal-appear 0.2s ease;
+        }
+
+        @keyframes modal-appear {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: center;  /* 改为居中 */
+            align-items: center;
+            padding: 22px 28px;
+            border-bottom: 1px solid #E9ECF0;
+            background-color: #F8FAFC;
+            position: relative;  /* 为绝对定位的关闭按钮做准备 */
+        }
+
+        .modal-header .close-btn {
+            position: absolute;
+            right: 28px;  /* 保持在右侧 */
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .modal-header h3 {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 500;
+            color: #2C3A47;
+            margin: 0;  /* 移除默认边距 */
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #94A3B8;
+            transition: all 0.2s;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-btn:hover {
+            background-color: #F1F5F9;
+            color: #4A5A6A;
+        }
+
+        .modal-body {
+            padding: 28px;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .email-meta {
+            background-color: #F8FAFC;
+            padding: 16px 20px;
+            border-radius: 16px;
+            margin-bottom: 28px;
+            border: 1px solid #E9ECF0;
+            font-size: 14px;
+            color: #4A5A6A;
+            line-height: 1.8;
+        }
+
+        .email-meta div {
+            margin-bottom: 6px;
+        }
+
+        .email-meta .label {
+            color: #8A9AA8;
+            width: 70px;
+            display: inline-block;
+        }
+
+        .email-content {
+            color: #2C3A47;
+            line-height: 1.8;
+            font-size: 15px;
+            white-space: pre-line;
+        }
+
+        .email-content p {
+            margin-bottom: 20px;
+        }
+
+        .email-highlight {
+            font-weight: 600;
+            color: #2C3A47;
+            background-color: #F8F2E9;
+            padding: 0 4px;
+        }
+
+        .modal-footer {
+            padding: 20px 28px 28px;
+            border-top: 1px solid #E9ECF0;
+            text-align: right;
+        }
+
+        .btn-reply {
+            background-color: #4A5A6A;
+            color: white;
+            border: none;
+            padding: 12px 36px;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #5D6F80;
+        }
+
+        .btn-reply:hover {
+            background-color: #5D6F80;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px -6px rgba(58,74,94,0.3);
+        }
+
+        /* 新增：匹配题弹窗样式 */
+        .match-question {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #E9ECF0;
+        }
+
+        .match-question:last-child {
+            border-bottom: none;
+        }
+
+        .match-label {
+            font-size: 14px;
+            color: #4A5A6A;
+            margin-bottom: 8px;
+        }
+
+        .match-row {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .match-name-input {
+            flex: 2;
+            min-width: 180px;
+            padding: 12px 16px;
+            border: 1px solid #E2E8F0;
+            border-radius: 40px;
+            font-size: 14px;
+            background-color: #F8FAFC;
+            transition: all 0.2s;
+        }
+
+        .match-name-input:focus {
+            outline: none;
+            border-color: #C49A6C;
+            background-color: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(196,154,108,0.1);
+        }
+
+        .match-role-select {
+            flex: 1;
+            min-width: 140px;
+            padding: 12px 16px;
+            border: 1px solid #E2E8F0;
+            border-radius: 40px;
+            font-size: 14px;
+            background-color: #F8FAFC;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .match-role-select:focus {
+            outline: none;
+            border-color: #C49A6C;
+            background-color: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(196,154,108,0.1);
+        }
+
+        .btn-submit {
+            background-color: #4A5A6A;
+            color: white;
+            border: none;
+            padding: 14px 36px;
+            border-radius: 40px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #5D6F80;
+            width: 100%;
+            margin-top: 16px;
+        }
+
+        .btn-submit:hover {
+            background-color: #5D6F80;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px -6px rgba(58,74,94,0.3);
+        }
+
+        .error-message {
+            color: #C45A6C;
+            font-size: 14px;
+            margin-top: 12px;
+            text-align: center;
+            min-height: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .progress-corner {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #FFFFFF;
+            border: 1px solid #E9ECF0;
+            border-radius: 40px;
+            padding: 8px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            font-size: 14px;
+            color: #8A9AA8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(4px);
+            background-color: rgba(255,255,255,0.9);
+            z-index: 1100;
+        }
+
+        .progress-value {
+            font-weight: 500;
+            color: #4A5A6A;
+            background-color: #F1F5F9;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 13px;
+        }
+
+                /* 论坛登录弹窗样式 */
+        .login-form {
+            margin-top: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            color: #4A5A6A;
+            margin-bottom: 6px;
+        }
+
+        .form-input {
+            width: 70%;
+            max-width: 280px;
+            padding: 12px 16px;
+            border: 1px solid #E2E8F0;
+            border-radius: 40px;
+            font-size: 14px;
+            background-color: #F8FAFC;
+            transition: all 0.2s;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #C49A6C;
+            background-color: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(196,154,108,0.1);
+        }
+
+        .login-error {
+            color: #C45A6C;
+            font-size: 14px;
+            margin-top: 12px;
+            text-align: center;
+            min-height: 20px;
+        }
+
+        .btn-login {
+            background-color: #4A5A6A;
+            color: white;
+            border: none;
+            padding: 14px 36px;
+            border-radius: 40px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #5D6F80;
+            width: auto;
+            min-width: 140px;
+            max-width: 180px;
+            margin: 16px auto 0;
+            display: block;
+        }
+
+        .btn-login:hover {
+            background-color: #5D6F80;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px -6px rgba(58,74,94,0.3);
+        }
+
+        /* 论坛登录弹窗 - 更紧凑的尺寸 */
+        #forum-login-modal .modal-container {
+            max-width: 380px;
+        }
+
+        #forum-login-modal .modal-body {
+            padding: 20px;
+        }
+
+        #forum-login-modal .login-form {
+            margin-top: 8px;
+        }
+
+        #forum-login-modal .form-group {
+            margin-bottom: 16px;
+        }
+
+        #forum-login-modal .form-input {
+            width: 85%;
+            max-width: 260px;
+        }
+
+        #forum-login-modal .btn-login {
+            margin-top: 12px;
+            padding: 12px 30px;
+            min-width: 130px;
+        }
+
+        @media (max-width: 800px) {
+            .mail-item {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .mail-date {
+                text-align: left;
+            }
+            .left-sidebar {
+                width: 120px;
+            }
+            .match-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高级私立中学</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <div class="workspace">
+        <div class="search-bar">
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="输入关键词..." id="search-input">
+                <button class="search-button" id="search-button">搜索</button>
+            </div>
+        </div>
+
+            <div class="main-panel">
+                <div class="left-sidebar">
+                    <div class="tab-item active" id="tab-mail">📧 邮件</div>
+                    <div class="tab-item" id="tab-website">🌐 圣樱高中官网</div>
+                </div>
+
+                <div class="content-area" id="page-mail">
+                    <div class="mail-list">
+                        <div class="mail-item" id="mail-1">
+                            <span class="mail-subject">委托咨询：高中少女早恋</span>
+                            <span class="mail-from">匿名用户</span>
+                            <span class="mail-to">收件人：kanming</span>
+                            <span class="mail-date">2月15日</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-area hidden" id="page-website">
+                    <div class="school-header">圣樱高级私立中学</div>
+                    <div class="intro-section">
+                        <p>圣樱高级私立中学坐落于宁南市北梧区晴山南麓，依山面海，四季温润。校园内樱林掩道、梧桐成荫，被誉为“宁南最美校园”。</p>
+                        <p>学校于1997年创办，初衷是为本市适龄学生提供接轨国际的高中教育。三十年来，圣樱始终秉持“小而精”的办学理念，严格控制招生规模，致力于为每一位学生提供定制化的成长路径。</p>
+                        <p>圣樱校训为“致知·修身·济世”，意在引导学生求知求真、涵养品格、心怀天下。</p>
+                    </div>
+                    <div class="announcement-title">📢 校园公告</div>
+                    <div class="announcement-list">
+                        <div class="announcement-item" data-page="notice-forum">
+                            <span class="announcement-badge">新</span>
+                            圣樱高校官方论坛正式上线
+                            <span class="announcement-date">2025.04.01</span>
+                        </div>
+                        <div class="announcement-item" data-page="notice-library">
+                            <span class="announcement-badge">新</span>
+                            圣樱·季风图书馆即将开放
+                            <span class="announcement-date">2025.02.27</span>
+                        </div>
+                        <div class="announcement-item" data-page="notice-evaluation">
+                            关于优化学生评价制度的通知
+                            <span class="announcement-date">2024.07.25</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-area hidden" id="page-notice-forum">
+                    <div class="notice-detail">
+                        <h2>圣樱高校官方论坛正式上线</h2>
+                        <div class="notice-meta">发布部门：学生发展中心   发布日期：2025.04.01</div>
+                        <div class="notice-content">
+                            <p>为加强家校沟通，促进学生之间健康有序的交流互动，学校官方论坛即日起正式上线运行。</p>
+                            <p>此为圣樱建校以来首个官方认证的学生网络社区，旨在为全体在校生提供一个安全、友善、有归属感的线上交流空间。</p>
+                            <p>该论坛仅向在校师生家长开放，请认证登录，文明发言，合规交流。</p>
+                            <p style="margin-top:24px; color:#C49A6C; cursor:pointer;" id="enter-forum-link">【点此进入论坛】</p>
+                        </div>
+                        <div class="back-link" data-back="website">← 返回官网首页</div>
+                    </div>
+                </div>
+
+                <div class="content-area hidden" id="page-notice-library">
+                    <div class="notice-detail">
+                        <h2>圣樱·季风图书馆即将开放</h2>
+                        <div class="notice-meta">发布部门：总务处   发布日期：2025.02.27</div>
+                        <div class="notice-content">
+                            <p>经过18个月精心建设，圣樱高级私立中学新图书馆——“季风图书馆”将于本月正式向师生开放。</p>
+                            <p>馆内设有独立学习位216个、小组研讨室12间，配备智能预约系统，学生可在线预订。</p>
+                            <p style="margin-top:24px; color:#8A9AA8; font-size:14px;">特别鸣谢：季氏集团捐赠6000万元</p>
+                        </div>
+                        <div class="back-link" data-back="website">← 返回官网首页</div>
+                    </div>
+                </div>
+
+                <div class="content-area hidden" id="page-notice-evaluation">
+                    <div class="notice-detail">
+                        <h2>关于优化学生评价制度的通知</h2>
+                        <div class="notice-meta">发布部门：教务处   发布日期：2024.07.25</div>
+                        <div class="notice-content">
+                            <p>经校务会研究决定，自即日起对我校学生评价体系作如下优化调整：</p>
+                            <p>一、优化考试结果呈现方式</p>
+                            <p>为减轻学生学业压力，学校决定不再公布具体考试排名。期中、期末及阶段性测试成绩将以ABC等级制呈现；</p>
+                            <p>二、设立“未来代言人”评选制度</p>
+                            <p>为鼓励学生全面发展，自本学年起每学期评选一名“未来代言人”，作为圣樱最高教育荣誉的代表；</p>
+                            <p>“未来代言人”不唯分数论，而是综合考量多项指标，学校将为代言人颁发奖杯与证书。</p>
+                        </div>
+                        <div class="back-link" data-back="website">← 返回官网首页</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 邮件弹窗 -->
+    <div class="modal-overlay hidden" id="email-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>委托咨询：高中少女早恋</h3>
+                <button class="close-btn" id="close-modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="email-meta">
+                    <div><span class="label">发件人：</span>匿名用户 xxxxxxxxx@mail.com</div>
+                    <div><span class="label">收件人：</span>kanming@mail.com</div>
+                    <div><span class="label">时间：</span>2026年2月15日 19:43</div>
+                </div>
+                <div class="email-content">
+                    <p>您好，恕我冒昧打扰。经友人推荐，我想委托您调查我女儿的恋爱情况。</p>
+                    <p>这听起来像个控制欲过头的变态母亲，但事实上我们母女关系非常健康，只是最近她开始变得情绪无常、频频崩溃，我怀疑和恋爱有关，也许对方并不值得托付，我需要了解更多才能做出正确的干预。</p>
+                    <p>我有<span class="email-highlight">3个怀疑对象</span>，都是她的同校同学，作为测试，请您<span class="email-highlight">找出他们的真实姓名并匹配身份</span>；提交正确答案后，我会支付下一笔佣金。</p>
+                    <p>我的女儿就读于<span class="email-highlight">圣樱高级私立中学</span>，学校官网已经锁定至您的桌面主栏，我希望您能专心处理我的委托。</p>
+                    <p>我女儿名叫<span class="email-highlight">江雨薇</span>。</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-reply" id="reply-btn">回复邮件</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 论坛登录弹窗 -->
+<div class="modal-overlay hidden" id="forum-login-modal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>圣樱高校学生认证</h3>
+            <button class="close-btn" id="close-forum-login">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="login-form">
+                <div class="form-group">
+                    <label class="form-label">账号</label>
+                    <input type="text" class="form-input" id="forum-username" placeholder="请输入账号">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">密码</label>
+                    <input type="password" class="form-input" id="forum-password" placeholder="请输入密码">
+                </div>
+                
+                <div class="login-error" id="forum-login-error"></div>
+                
+                <button class="btn-login" id="forum-login-btn">登录</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- 新增：匹配题弹窗 -->
+    <div class="modal-overlay hidden" id="match-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>回复邮件</h3>
+                <button class="close-btn" id="close-match-modal">×</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 20px; color: #4A5A6A;">请填写三个怀疑对象的姓名，并匹配他们的身份</p>
+                
+                <!-- 第一题 -->
+                <div class="match-question">
+                    <div class="match-label">怀疑对象 ①</div>
+                    <div class="match-row">
+                        <input type="text" class="match-name-input" id="name1" placeholder="输入姓名">
+                        <select class="match-role-select" id="role1">
+                            <option value="">-- 选择身份 --</option>
+                            <option value="远洋留学成员">远洋留学成员</option>
+                            <option value="乐团小提琴手">乐团小提琴手</option>
+                            <option value="学生会主席">学生会主席</option>
+                            <option value="摄影部部长">摄影部部长</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- 第二题 -->
+                <div class="match-question">
+                    <div class="match-label">怀疑对象 ②</div>
+                    <div class="match-row">
+                        <input type="text" class="match-name-input" id="name2" placeholder="输入姓名">
+                        <select class="match-role-select" id="role2">
+                            <option value="">-- 选择身份 --</option>
+                            <option value="远洋留学成员">远洋留学成员</option>
+                            <option value="乐团小提琴手">乐团小提琴手</option>
+                            <option value="学生会主席">学生会主席</option>
+                            <option value="摄影部部长">摄影部部长</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- 第三题 -->
+                <div class="match-question">
+                    <div class="match-label">怀疑对象 ③</div>
+                    <div class="match-row">
+                        <input type="text" class="match-name-input" id="name3" placeholder="输入姓名">
+                        <select class="match-role-select" id="role3">
+                            <option value="">-- 选择身份 --</option>
+                            <option value="远洋留学成员">远洋留学成员</option>
+                            <option value="乐团小提琴手">乐团小提琴手</option>
+                            <option value="学生会主席">学生会主席</option>
+                            <option value="摄影部部长">摄影部部长</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="error-message" id="match-error"></div>
+                
+                <button class="btn-submit" id="submit-match">提交</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">1/43</span>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // 页面切换逻辑
+        const pageProgressMap = {
+            'mail': 1,
+            'website': 2,
+            'notice-forum': 3,
+            'notice-library': 4,
+            'notice-evaluation': 5
+        };
+
+        const pages = {
+            mail: document.getElementById('page-mail'),
+            website: document.getElementById('page-website'),
+            'notice-forum': document.getElementById('page-notice-forum'),
+            'notice-library': document.getElementById('page-notice-library'),
+            'notice-evaluation': document.getElementById('page-notice-evaluation')
+        };
+
+        const tabMail = document.getElementById('tab-mail');
+        const tabWebsite = document.getElementById('tab-website');
+        const progressElement = document.getElementById('progress-value');
+
+        function showPage(pageId) {
+            Object.values(pages).forEach(page => {
+                if (page) page.classList.add('hidden');
+            });
+            if (pages[pageId]) {
+                pages[pageId].classList.remove('hidden');
+            }
+            if (pageId === 'mail') {
+                tabMail.classList.add('active');
+                tabWebsite.classList.remove('active');
+            } else {
+                tabWebsite.classList.add('active');
+                tabMail.classList.remove('active');
+            }
+            const progress = pageProgressMap[pageId] || 1;
+            progressElement.textContent = `${progress}/43`;
+            window.location.hash = pageId;
+        }
+
+        function initFromHash() {
+            const hash = window.location.hash.substring(1);
+            if (hash && pages[hash]) {
+                showPage(hash);
+            } else {
+                showPage('mail');
+                // 确保邮件页默认进度为0/100
+                progressElement.textContent = '0/43';
+            }
+        }
+
+        window.addEventListener('hashchange', function() {
+            const hash = window.location.hash.substring(1);
+            if (hash && pages[hash]) {
+                showPage(hash);
+            }
+        });
+
+        tabMail.addEventListener('click', function() {
+            showPage('mail');
+        });
+
+        tabWebsite.addEventListener('click', function() {
+            showPage('website');
+        });
+
+        document.querySelectorAll('[data-page]').forEach(item => {
+            item.addEventListener('click', function() {
+                const pageId = this.getAttribute('data-page');
+                showPage(pageId);
+            });
+        });
+
+        document.querySelectorAll('[data-back]').forEach(link => {
+            link.addEventListener('click', function() {
+                const backTo = this.getAttribute('data-back');
+                showPage(backTo);
+            });
+        });
+
+        // ========== 邮件弹窗和匹配题逻辑 ==========
+        const mailItem = document.getElementById('mail-1');
+        const emailModal = document.getElementById('email-modal');
+        const matchModal = document.getElementById('match-modal');
+        const closeModal = document.getElementById('close-modal');
+        const closeMatchModal = document.getElementById('close-match-modal');
+        const replyBtn = document.getElementById('reply-btn');
+        const submitBtn = document.getElementById('submit-match');
+        const errorDiv = document.getElementById('match-error');
+
+        // 打开邮件弹窗 - 进度设为1/100
+        mailItem.addEventListener('click', function() {
+            emailModal.classList.remove('hidden');
+            progressElement.textContent = '1/43';
+        });
+
+        // 关闭邮件弹窗 - 进度恢复0/100
+        closeModal.addEventListener('click', function() {
+            emailModal.classList.add('hidden');
+            progressElement.textContent = '0/43';
+        });
+
+        // 点击回复邮件：关闭邮件弹窗，打开匹配题弹窗
+        replyBtn.addEventListener('click', function() {
+            emailModal.classList.add('hidden');
+            matchModal.classList.remove('hidden');
+            // 清空之前输入的内容和错误信息
+            document.getElementById('name1').value = '';
+            document.getElementById('name2').value = '';
+            document.getElementById('name3').value = '';
+            document.getElementById('role1').value = '';
+            document.getElementById('role2').value = '';
+            document.getElementById('role3').value = '';
+            errorDiv.textContent = '';
+            // 进度保持1/100
+        });
+
+        // 关闭匹配题弹窗 - 进度恢复0/100
+        closeMatchModal.addEventListener('click', function() {
+            matchModal.classList.add('hidden');
+            progressElement.textContent = '0/43';
+        });
+
+        // 点击背景关闭所有弹窗
+        emailModal.addEventListener('click', function(e) {
+            if (e.target === emailModal) {
+                emailModal.classList.add('hidden');
+                progressElement.textContent = '0/43';
+            }
+        });
+
+        matchModal.addEventListener('click', function(e) {
+            if (e.target === matchModal) {
+                matchModal.classList.add('hidden');
+                progressElement.textContent = '0/43';
+            }
+        });
+
+                // ========== 论坛登录弹窗逻辑 ==========
+        const enterForumLink = document.getElementById('enter-forum-link');
+        const forumLoginModal = document.getElementById('forum-login-modal');
+        const closeForumLogin = document.getElementById('close-forum-login');
+        const forumLoginBtn = document.getElementById('forum-login-btn');
+        const forumUsername = document.getElementById('forum-username');
+        const forumPassword = document.getElementById('forum-password');
+        const forumLoginError = document.getElementById('forum-login-error');
+
+        // 点击“点此进入论坛”打开登录弹窗
+        enterForumLink.addEventListener('click', function() {
+            forumLoginModal.classList.remove('hidden');
+            // 清空之前输入的内容和错误信息
+            forumUsername.value = '';
+            forumPassword.value = '';
+            forumLoginError.textContent = '';
+        });
+
+        // 关闭论坛登录弹窗（×按钮）
+        closeForumLogin.addEventListener('click', function() {
+            forumLoginModal.classList.add('hidden');
+        });
+
+        // 点击背景关闭论坛登录弹窗
+        forumLoginModal.addEventListener('click', function(e) {
+            if (e.target === forumLoginModal) {
+                forumLoginModal.classList.add('hidden');
+            }
+        });
+
+        // 论坛登录验证
+        forumLoginBtn.addEventListener('click', function() {
+            const username = forumUsername.value.trim();
+            const password = forumPassword.value.trim();
+
+            if (!username || !password) {
+                forumLoginError.textContent = '请输入账号和密码';
+                return;
+            }
+
+            // 验证账号密码
+            if (username === 'linshizhanghao' && password === '889556') {
+                // 正确，跳转到论坛页面
+                window.location.href = '10论坛.html';
+            } else {
+                forumLoginError.textContent = '账号/密码错误';
+            }
+        });
+
+        // 回车键登录
+        forumPassword.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                forumLoginBtn.click();
+            }
+        });
+
+        // 提交答案验证
+        submitBtn.addEventListener('click', function() {
+            // 获取输入的值
+            const name1 = document.getElementById('name1').value.trim();
+            const name2 = document.getElementById('name2').value.trim();
+            const name3 = document.getElementById('name3').value.trim();
+            const role1 = document.getElementById('role1').value;
+            const role2 = document.getElementById('role2').value;
+            const role3 = document.getElementById('role3').value;
+
+            // 检查是否有空项
+            if (!name1 || !name2 || !name3 || !role1 || !role2 || !role3) {
+                errorDiv.textContent = '请填写所有空白项';
+                return;
+            }
+
+            // 正确答案映射
+            const correctAnswers = {
+                '程述白': '学生会主席',
+                '林泽川': '摄影部部长',
+                '李远明': '远洋留学成员'
+            };
+
+            // 构建提交的匹配对
+            const submittedPairs = [
+                { name: name1, role: role1 },
+                { name: name2, role: role2 },
+                { name: name3, role: role3 }
+            ];
+
+            // 验证：每个提交的名字必须在正确答案中，且角色匹配
+            let correctCount = 0;
+            const usedNames = new Set();
+
+            for (const pair of submittedPairs) {
+                // 检查名字是否在正确答案中，且没有被使用过
+                if (correctAnswers[pair.name] && !usedNames.has(pair.name)) {
+                    // 检查角色是否匹配
+                    if (correctAnswers[pair.name] === pair.role) {
+                        correctCount++;
+                        usedNames.add(pair.name);
+                    }
+                }
+            }
+
+            // 如果三个都正确
+            if (correctCount === 3) {
+                // 直接跳转到09邮件.html，不给提示弹窗
+                window.location.href = '09邮件.html';
+            } else {
+                errorDiv.textContent = '或许你应该再想想……';
+            }
+        });
+
+        initFromHash();
+    </script>
+    <script src="search.js"></script>
+</body>
+</html>

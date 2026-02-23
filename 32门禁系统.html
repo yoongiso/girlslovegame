@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能门禁</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 弹窗样式 - 复用之前的模态框样式 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(3px);
+        }
+
+        .modal-container {
+            max-width: 500px;
+            width: 90%;
+            background-color: #FFFFFF;
+            border-radius: 28px;
+            box-shadow: 0 30px 60px -20px rgba(0,0,0,0.3);
+            border: 1px solid #E9ECF0;
+            overflow: hidden;
+            animation: modal-appear 0.2s ease;
+        }
+
+        @keyframes modal-appear {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 22px 28px;
+            border-bottom: 1px solid #E9ECF0;
+            background-color: #F8FAFC;
+            position: relative;
+        }
+
+        .modal-header .close-btn {
+            position: absolute;
+            right: 28px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #94A3B8;
+            transition: all 0.2s;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .modal-header .close-btn:hover {
+            background-color: #F1F5F9;
+            color: #4A5A6A;
+        }
+
+        .modal-header h3 {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 500;
+            color: #2C3A47;
+            margin: 0;
+        }
+
+        .modal-body {
+            padding: 28px;
+        }
+
+        /* 日期选择样式 */
+        .date-picker-container {
+            margin-top: 8px;
+        }
+
+        .date-hint {
+            color: #4A5A6A;
+            font-size: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .date-selectors {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .date-select {
+            padding: 12px 16px;
+            border: 1px solid #E2E8F0;
+            border-radius: 40px;
+            font-size: 14px;
+            background-color: #F8FAFC;
+            transition: all 0.2s;
+            min-width: 100px;
+            cursor: pointer;
+        }
+
+        .date-select:focus {
+            outline: none;
+            border-color: #C49A6C;
+            background-color: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(196,154,108,0.1);
+        }
+
+        /* 通道选择样式 */
+        .gate-selector {
+            margin: 20px 0 24px;
+            text-align: center;
+        }
+
+        .gate-label {
+            color: #4A5A6A;
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .gate-options {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .gate-option {
+            padding: 10px 24px;
+            border: 1px solid #E2E8F0;
+            border-radius: 40px;
+            font-size: 14px;
+            background-color: #F8FAFC;
+            color: #4A5A6A;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .gate-option:hover {
+            border-color: #C49A6C;
+            background-color: #F8F2E9;
+        }
+
+        .gate-option.selected {
+            background-color: #C49A6C;
+            color: white;
+            border-color: #C49A6C;
+        }
+
+        .btn-query-submit {
+            background-color: #4A5A6A;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #5D6F80;
+            width: auto;
+            min-width: 120px;
+            margin: 8px auto 0;
+            display: block;
+        }
+
+        .btn-query-submit:hover {
+            background-color: #5D6F80;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px -6px rgba(58,74,94,0.3);
+        }
+
+        /* 可点击链接样式 */
+        .clickable-link {
+            text-decoration: underline;
+            cursor: pointer;
+            color: #C49A6C;
+            transition: color 0.2s;
+        }
+
+        .clickable-link:hover {
+            color: #B3895C;
+            text-decoration: none;
+            background-color: #F8F2E9;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .gate-input-wrapper {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .gate-input {
+            width: 60%;
+            max-width: 200px;
+            padding: 12px 16px;
+            border: 1px solid #E2E8F0;
+            border-radius: 40px;
+            font-size: 14px;
+            background-color: #F8FAFC;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .gate-input:focus {
+            outline: none;
+            border-color: #C49A6C;
+            background-color: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(196,154,108,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width: 1000px;">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高级私立中学</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <!-- 搜索栏 - 与官网样式一致，带主页图标 -->
+        <div class="search-bar">
+            <div class="search-group">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="输入关键词..." id="search-input">
+                    <button class="search-button" id="search-button">搜索</button>
+                </div>
+            </div>
+            <a href="29邮件.html" class="home-icon" title="返回工作台" target="_blank">🏠</a>
+        </div>
+
+        <div class="content-area">
+            <div class="back-button" onclick="history.back()">返回</div>
+
+            <div class="news-detail">
+                <div class="news-header">
+                    <h1 class="news-title">宁北一高智慧校园升级：全新门禁系统正式启用</h1>
+                    <div class="news-meta">
+                        <span>发布部门：宁北一高新闻社</span>
+                        <span>发布日期：2025.01.01</span>
+                        <span>阅读量：3,421</span>
+                    </div>
+                </div>
+                <div class="news-content">
+                    <p>为进一步筑牢校园安全防线，提升智慧化管理水平，营造更加安全、有序的学习生活环境，宁北市第一中学近日顺利完成了校门门禁系统的全面升级改造。自即日起，全新的智能门禁系统将正式投入使用，全校师生需凭校园卡核验身份后方可进出校园。</p>
+                    
+                    <p>所有通行记录均实时上传至学校安全大数据中心，一旦发生异常情况，系统将自动预警，方便学校第一时间进行干预。</p>
+                    
+                    <p>家长可通过 <span class="clickable-link" id="smart-system-link">【智慧宁北】</span> 系统查询孩子的刷卡记录，掌握孩子的到校、离校情况。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 图片查看弹窗 -->
+    <div class="modal-overlay hidden" id="image-modal">
+        <div class="modal-container" style="max-width: 700px; width: 90%;">
+            <div class="modal-header">
+                <h3>南门刷卡记录</h3>
+                <button class="close-btn" id="close-image-modal">×</button>
+            </div>
+            <div class="modal-body" style="padding: 20px; text-align: center;">
+                <img src="" alt="刷卡记录" id="modal-image" style="max-width: 100%; max-height: 60vh; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+            </div>
+        </div>
+    </div>
+
+    <!-- 日期选择弹窗 -->
+    <div class="modal-overlay hidden" id="date-picker-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>查询刷卡记录</h3>
+                <button class="close-btn" id="close-modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="date-picker-container">
+                    <div class="date-hint">请输入查询日期</div>
+                    
+                    <div class="date-selectors">
+                        <select class="date-select" id="select-year">
+                            <option value="">年</option>
+                            <!-- 用JS动态生成2025-2026年选项 -->
+                        </select>
+                        <select class="date-select" id="select-month">
+                            <option value="">月</option>
+                            <!-- 用JS动态生成1-12月 -->
+                        </select>
+                        <select class="date-select" id="select-day">
+                            <option value="">日</option>
+                            <!-- 用JS动态生成1-31日 -->
+                        </select>
+                    </div>
+
+                    <!-- 通道输入 -->
+                    <div class="gate-selector">
+                        <div class="gate-label">请输入要查询的通道</div>
+                        <div class="gate-input-wrapper">
+                            <input type="text" class="gate-input" id="gate-input" >
+                        </div>
+                    </div>
+                    
+                    <button class="btn-query-submit" id="submit-date">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">37/100</span>
+    </div>
+
+    <script src="search.js"></script>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // 获取当前年份
+        const currentYear = new Date().getFullYear();
+        
+        // 生成年份选项（从2025年到当前年份+1）
+        function generateYearOptions() {
+            const yearSelect = document.getElementById('select-year');
+            const startYear = 2025;
+            const endYear = currentYear + 1;
+            
+            for (let year = startYear; year <= endYear; year++) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year + '年';
+                yearSelect.appendChild(option);
+            }
+        }
+        
+        // 生成月份选项
+        function generateMonthOptions() {
+            const monthSelect = document.getElementById('select-month');
+            for (let month = 1; month <= 12; month++) {
+                const option = document.createElement('option');
+                option.value = month;
+                option.textContent = month + '月';
+                monthSelect.appendChild(option);
+            }
+        }
+        
+        // 生成日期选项（简化版，固定1-31，不考虑月份实际天数）
+        function generateDayOptions() {
+            const daySelect = document.getElementById('select-day');
+            for (let day = 1; day <= 31; day++) {
+                const option = document.createElement('option');
+                option.value = day;
+                option.textContent = day + '日';
+                daySelect.appendChild(option);
+            }
+        }
+        
+        // 初始化下拉框
+        generateYearOptions();
+        generateMonthOptions();
+        generateDayOptions();
+
+        // 弹窗相关元素
+        const smartSystemLink = document.getElementById('smart-system-link');
+        const datePickerModal = document.getElementById('date-picker-modal');
+        const closeModal = document.getElementById('close-modal');
+        const submitDate = document.getElementById('submit-date');
+        const selectYear = document.getElementById('select-year');
+        const selectMonth = document.getElementById('select-month');
+        const selectDay = document.getElementById('select-day');
+        
+        // 获取通道输入框
+        const gateInput = document.getElementById('gate-input');
+
+        // 打开弹窗
+        smartSystemLink.addEventListener('click', function() {
+            datePickerModal.classList.remove('hidden');
+            // 重置输入框
+            gateInput.value = '';
+        });
+
+        // 关闭弹窗（×按钮）
+        closeModal.addEventListener('click', function() {
+            datePickerModal.classList.add('hidden');
+        });
+
+        // 点击背景关闭弹窗
+        datePickerModal.addEventListener('click', function(e) {
+            if (e.target === datePickerModal) {
+                datePickerModal.classList.add('hidden');
+            }
+        });
+
+        // 提交日期
+        submitDate.addEventListener('click', function() {
+            const year = selectYear.value;
+            const month = selectMonth.value;
+            const day = selectDay.value;
+            const gateValue = gateInput.value.trim();  // 获取输入的通道并去除空格
+            
+            if (!year || !month || !day) {
+                alert('请选择完整的年月日');
+                return;
+            }
+
+            if (!gateValue) {
+                alert('请输入通道名称');
+                return;
+            }
+            
+            // 检查是否为正确日期和通道：2025年10月28日 + 南门
+            if (year === '2025' && month === '10' && day === '28' && gateValue === '南门') {
+                // 先隐藏日期选择弹窗
+                datePickerModal.classList.add('hidden');
+                
+                // 使用setTimeout确保日期弹窗完全隐藏后再显示图片弹窗
+                setTimeout(function() {
+                    showImage('https://s1.img-e.com/20260219/6996ca0012e5e.png');
+                }, 50);
+            } else {
+                // 显示提示信息
+                alert('这似乎与你的调查无关…');
+            }
+        });
+
+        // 图片弹窗相关元素
+        const imageModal = document.getElementById('image-modal');
+        const closeImageModal = document.getElementById('close-image-modal');
+        const modalImage = document.getElementById('modal-image');
+
+        // 显示图片的函数
+        function showImage(imageUrl) {
+            modalImage.src = imageUrl;
+            imageModal.classList.remove('hidden');
+        }
+
+        // 关闭图片弹窗（×按钮）
+        closeImageModal.addEventListener('click', function() {
+            imageModal.classList.add('hidden');
+            modalImage.src = ''; // 清空图片源
+        });
+
+        // 在原有的ESC关闭弹窗逻辑中，增加对图片弹窗的支持
+        // 找到 document.addEventListener('keydown', ...) 部分，在内部添加：
+        if (!imageModal.classList.contains('hidden')) {
+            imageModal.classList.add('hidden');
+            modalImage.src = '';
+        }
+    </script>
+</body>
+</html>

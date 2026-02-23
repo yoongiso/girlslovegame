@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>期末颁奖礼明日于圣樱二部大礼堂举行</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container" style="max-width: 1000px;">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高级私立中学</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <!-- 修改后的搜索栏，添加 target="_blank" -->
+        <div class="search-bar">
+            <div class="search-group">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="输入关键词..." id="search-input">
+                    <button class="search-button" id="search-button">搜索</button>
+                </div>
+            </div>
+            <a href="09邮件.html" class="home-icon" title="返回工作台" target="_blank">🏠</a>
+        </div>
+
+        <div class="content-area">
+            <div class="back-button" onclick="history.back()">返回</div>
+
+            <div class="news-detail">
+                <div class="news-header">
+                    <h1 class="news-title">期末颁奖礼明日于圣樱二部大礼堂举行</h1>
+                    <div class="news-meta">
+                        <span>发布部门：校园新闻部</span>
+                        <span>发布日期：2025.07.02</span>
+                        <span>阅读量：2,845</span>
+                    </div>
+                </div>
+                <div class="news-content">
+                    <p>本学期末颁奖礼将于明日在圣樱二部大礼堂正式举行。仪式上，学校将对本学期表现优异的学生进行集中表彰，同时揭晓备受关注的本年度“未来代言人”获奖者。</p>
+                    <p>为保证仪式有序推进，请家长代表于明日上午10点前完成入场落座，共同维护良好的会场秩序。</p>
+                    <p>欢迎各位见证圣樱学子的荣耀时刻。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">27/43</span>
+    </div>
+
+    <script src="search.js"></script>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>

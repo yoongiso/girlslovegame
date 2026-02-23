@@ -1,0 +1,368 @@
+/* ===== style.css - 少女心情大事记 全局样式 ===== */
+
+/* 全局重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+}
+
+body {
+    background-color: #F1F5F9;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;  /* 注意：01邮件用1200px，其他页面用1000px，需要按页面调整 */
+    width: 100%;
+    background-color: #FFFFFF;
+    border-radius: 32px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    border: 1px solid #E9ECF0;
+    position: relative;
+}
+
+/* ===== 顶部简单栏 ===== */
+.simple-bar {
+    background-color: #F8FAFC;
+    padding: 8px 24px;
+    border-bottom: 1px solid #E2E8F0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: #8A9AA8;
+}
+
+.simple-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.simple-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #94A3B8;
+    border-radius: 50%;
+}
+
+/* ===== 搜索栏 ===== */
+/* 在搜索栏样式区域添加以下代码 */
+
+/* 搜索栏容器 - 调整布局 */
+.search-bar {
+    padding: 20px 30px;
+    border-bottom: 1px solid #E9ECF0;
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;  /* 改为space-between，让图标靠右 */
+    width: 100%;
+}
+
+/* 搜索框组 - 保持左对齐 */
+.search-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+/* 主页图标 */
+.home-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #F8FAFC;
+    color: #4A5A6A;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid #E2E8F0;
+    margin-left: 12px;
+    flex-shrink: 0;
+    text-decoration: none;
+}
+
+.home-icon:hover {
+    background-color: #E2E8F0;
+    color: #C49A6C;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+/* 确保搜索容器宽度不变 */
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    background-color: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 40px;
+    transition: all 0.2s;
+}
+
+.search-container:focus-within {
+    border-color: #C49A6C;
+    box-shadow: 0 0 0 3px rgba(196,154,108,0.1);
+    background-color: #FFFFFF;
+}
+
+.search-icon {
+    position: absolute;
+    left: 16px;
+    font-size: 18px;
+    color: #8A9AA8;
+    pointer-events: none;
+}
+
+.search-input {
+    flex: 1;
+    padding: 12px 16px 12px 48px;
+    border: none;
+    background: transparent;
+    font-size: 15px;
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: #B8C5D2;
+}
+
+.search-button {
+    background-color: #F1F5F9;
+    border: none;
+    color: #4A5A6A;
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+    padding: 8px 20px;
+    border-radius: 40px;
+    margin-right: 4px;
+    transition: all 0.2s;
+    white-space: nowrap;
+    border-left: 1px solid #E2E8F0;
+}
+
+.search-button:hover {
+    background-color: #E2E8F0;
+    color: #2C3A47;
+}
+
+/* ===== 内容区通用 ===== */
+.content-area {
+    padding: 30px 50px 40px;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* ===== 返回按钮 ===== */
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #8A9AA8;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    margin-left: 0px;  /* 从-34px改为-8px */
+    transition: color 0.2s;
+    border: none;
+    background: none;
+    padding: 4px 0;
+    position: relative;
+    left: 0;
+}
+
+.back-button:hover {
+    color: #C49A6C;
+}
+
+.back-button::before {
+    content: "←";
+    font-size: 16px;
+    line-height: 1;
+}
+
+/* ===== 新闻详情页样式 ===== */
+.news-detail {
+    width: 100%;
+}
+
+.news-header {
+    margin-bottom: 24px;
+}
+
+.news-title {
+    font-size: 32px;
+    font-weight: 500;
+    color: #2C3A47;
+    line-height: 1.4;
+    margin-bottom: 16px;
+    letter-spacing: 0.3px;
+}
+
+.news-meta {
+    color: #8A9AA8;
+    font-size: 14px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #E9ECF0;
+}
+
+.news-meta span {
+    margin-right: 24px;
+}
+
+.news-content {
+    line-height: 1.9;
+    color: #3F4D5C;
+    font-size: 16px;
+}
+
+.news-content p {
+    margin-bottom: 24px;
+}
+
+/* 图片样式（用于学生会换届等带图的页面） */
+.news-image {
+    margin: 32px 0 8px;
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #E9ECF0;
+}
+
+.news-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.image-caption {
+    color: #8A9AA8;
+    font-size: 13px;
+    margin-bottom: 24px;
+    text-align: right;
+    font-style: italic;
+}
+
+/* ===== 公告详情页样式（用于01邮件内的公告） ===== */
+.notice-detail {
+    max-width: 800px;
+}
+
+.notice-detail h2 {
+    font-size: 24px;
+    font-weight: 500;
+    color: #2C3A47;
+    margin-bottom: 16px;
+}
+
+.notice-meta {
+    color: #8A9AA8;
+    font-size: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #E9ECF0;
+}
+
+.notice-content {
+    line-height: 1.8;
+    color: #3F4D5C;
+    font-size: 15px;
+}
+
+.notice-content p {
+    margin-bottom: 20px;
+}
+
+.back-link {
+    margin-top: 32px;
+    color: #C49A6C;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* ===== 进度条 ===== */
+.progress-corner {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #FFFFFF;
+    border: 1px solid #E9ECF0;
+    border-radius: 40px;
+    padding: 8px 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    font-size: 14px;
+    color: #8A9AA8;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(4px);
+    background-color: rgba(255,255,255,0.9);
+    z-index: 1100;
+}
+
+.progress-value {
+    font-weight: 500;
+    color: #4A5A6A;
+    background-color: #F1F5F9;
+    padding: 2px 10px;
+    border-radius: 30px;
+    font-size: 13px;
+}
+
+/* ===== 工具类 ===== */
+.hidden {
+    display: none;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 700px) {
+    .content-area {
+        padding: 20px 20px 30px;
+    }
+    .news-title {
+        font-size: 26px;
+    }
+}
+
+@media (max-width: 800px) {
+    .mail-item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    .mail-date {
+        text-align: left;
+    }
+    .left-sidebar {
+        width: 120px;
+    }
+}
+
+@media (max-width: 700px) {
+    .content-area {
+        padding: 20px 20px 30px;
+    }
+    .back-button {
+        margin-left: -8px;  /* 保持对齐 */
+    }
+}

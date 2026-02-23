@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>帖子详情 · 圣樱高校学生论坛</title>
+    <link rel="stylesheet" href="style-forum.css">
+</head>
+<body>
+    <div class="container">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高校学生论坛</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <div class="content-area">
+            <div class="nav-bar">
+                <span class="back-link" onclick="history.back()">返回</span>
+            </div>
+
+            <div class="post-main">
+                <h1 class="post-title">每天看李远明学习那么努力，真是有点心酸。。。</h1>
+                
+                <div class="post-header">
+                    <span class="author-name">帖主</span>
+                    <span class="post-meta">2025-10-12</span>
+                </div>
+                
+                <div class="post-content">
+                    <p>想了想感觉好怜悯，，，这可能就是千年老二的宿命吧</p>
+                </div>
+            </div>
+
+            <div class="comments-section">
+                <div class="comments-title">全部回复 · 3条</div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人A</span>
+                        <span class="comment-time">2025-10-12</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>所以他那么讨厌小提琴女神也情有可原吧 毕竟他从高一就开始跟她较劲了 这是宿敌啊！</p>
+                    </div>
+                </div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人B</span>
+                        <span class="comment-time">2025-10-12</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>宿敌的学号只比他大一位，也像一种宿命论，注定压他一头了[坏笑]</p>
+                    </div>
+                </div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人C</span>
+                        <span class="comment-time">2025-10-12</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>现在还来了一个天才转学生，他连老二都排不上号了捏</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">25/43</span>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>

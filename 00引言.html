@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《少女心情大事记》 · 网络侦探</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #F1F5F9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background-color: #FFFFFF;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            border: 1px solid #E9ECF0;
+        }
+
+        /* 简化顶部栏 */
+        .simple-bar {
+            background-color: #F8FAFC;
+            padding: 8px 24px;
+            border-bottom: 1px solid #E2E8F0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: #8A9AA8;
+        }
+
+        .simple-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .simple-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #94A3B8;
+            border-radius: 50%;
+        }
+
+        /* 主要内容区 */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 40px 70px;
+            background: linear-gradient(145deg, #FFFFFF 0%, #F9FBFD 100%);
+        }
+
+        .game-title {
+            font-size: 52px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            color: #3A4A5E;
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 2px solid #E2D5C0;
+            padding-bottom: 16px;
+            display: inline-block;
+        }
+
+        /* 文案卡片 */
+        .case-card {
+            background-color: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 24px;
+            padding: 48px 48px 56px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 8px 20px -8px rgba(0,0,0,0.05);
+        }
+
+        .story-text {
+            color: #3F4D5C;
+            line-height: 1.9;
+            font-size: 16px;
+            margin-bottom: 40px;
+        }
+
+        .story-text p {
+            margin-bottom: 20px;
+        }
+
+        /* 加粗强调「她女儿的早恋对象」 */
+        .highlight-text {
+            font-weight: 700;
+            color: #2C3A47;
+            background-color: #F8F2E9;
+            padding: 0 4px;
+        }
+
+        /* 操作须知 */
+        .instructions {
+            background-color: #F8FAFC;
+            border-radius: 18px;
+            padding: 32px;
+            margin: 32px 0 40px;
+            border: 1px solid #E9ECF0;
+        }
+
+        .instructions-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: #3A4A5E;
+            margin-bottom: 24px;
+            letter-spacing: 1px;
+        }
+
+        .instruction-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .instruction-item {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            color: #4A5A6A;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .instruction-marker {
+            background-color: #E2D5C0;
+            color: #3A4A5E;
+            width: 24px;
+            height: 24px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 500;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* 高亮关键词 */
+        .instruction-highlight {
+            background-color: #FFFFFF;
+            padding: 4px 12px;
+            border-radius: 30px;
+            color: #2C3A47;
+            border: 1.5px solid #C49A6C;
+            font-family: 'Menlo', 'Monaco', monospace;
+            font-size: 13px;
+            margin: 0 4px;
+            white-space: nowrap;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            box-shadow: 0 2px 4px rgba(196,154,108,0.1);
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #E9ECF0;
+            margin: 36px 0 32px;
+        }
+
+        /* 底部文案区域 */
+        .closing-section {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 32px;
+        }
+
+        .final-line {
+            font-size: 17px;
+            color: #2C3A47;
+            font-weight: 450;
+            width: 100%;
+            text-align: left;
+        }
+
+        /* 去掉棕色竖杠，只保留文字 */
+        .question-line {
+            font-size: 17px;
+            color: #2C3A47;
+            font-weight: 450;
+            width: 100%;
+            text-align: left;
+            font-style: normal;
+            padding-left: 0;
+            margin-bottom: 8px;
+        }
+
+        /* 按钮 */
+        .button-container {
+            text-align: center;
+            margin-top: 24px;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background-color: #4A5A6A;
+            color: white;
+            border: none;
+            padding: 18px 60px;
+            border-radius: 40px;
+            font-size: 18px;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 6px 14px -6px rgba(58,74,94,0.3);
+            border: 1px solid #5D6F80;
+            min-width: 240px;
+        }
+
+        .btn-primary:hover {
+            background-color: #5D6F80;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -8px rgba(58,74,94,0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0px);
+        }
+
+
+        .progress-value {
+            font-weight: 500;
+            color: #4A5A6A;
+            background-color: #F1F5F9;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 13px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .game-title { font-size: 38px; }
+            .hero { padding: 40px 20px; }
+            .case-card { padding: 32px 24px; }
+            .progress-corner { bottom: 20px; right: 20px; }
+            .instruction-highlight {
+                display: inline-block;
+                margin: 4px 2px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 简化顶部栏 -->
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>kanming.lab</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="hero">
+            <h1 class="game-title">《少女心情大事记》</h1>
+
+            <!-- 案件卡片 -->
+            <div class="case-card">
+                <div class="story-text">
+                    <p>你叫堪明，是名网络情报分析师。</p>
+                    <p>你的佣金昂贵，雇主却络绎不绝。这天，你收到了一封匿名邮件，委托人想请你调查<span class="highlight-text">她女儿的早恋对象</span>。</p>
+                    <p>早恋对象？太小儿科了吧。但委托人出手阔绰，令你难以拒绝。</p>
+                </div>
+
+                <!-- 操作须知 -->
+                <div class="instructions">
+                    <div class="instructions-title">【操作须知】</div>
+                    <div class="instruction-list">
+                        <div class="instruction-item">
+                            <span class="instruction-marker">①</span>
+                            <span>你的专长是通过 <span class="instruction-highlight">在顶部搜索栏/某些特定页面搜索关键词</span>，系统会返回关联资料，关键词需要严格按照规定格式输入；</span>
+                        </div>
+                        <div class="instruction-item">
+                            <span class="instruction-marker">②</span>
+                            <span>过程中存在大量页面来回跳转，你的好习惯是 <span class="instruction-highlight">同步整理excel表格</span>，方便资料复盘；</span>
+                        </div>
+                        <div class="instruction-item">
+                            <span class="instruction-marker">③</span>
+                            <span><span class="instruction-highlight">电脑</span> 是你的最佳搭档，它能避免部分页面在移动端展示不全的问题；</span>
+                        </div>
+                        <div class="instruction-item">
+                            <span class="instruction-marker">④</span>
+                            <span>调查时长约2-3个小时，页面右下角的数字代表你的调查进度，数字越大，离真相更近。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 底部文案区域 -->
+                <div class="closing-section">
+                    <div class="final-line">
+                        你已经准备好拿下这一单了。
+                    </div>
+
+                    <div class="question-line">
+                        ——那个女孩叫什么来着？
+                    </div>
+
+                    <!-- 接下委托按钮 -->
+                    <div class="button-container">
+                        <button class="btn-primary" onclick="window.location.href='01邮件.html'">
+                            接下委托
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        document.querySelector('.btn-primary').addEventListener('click', function(e) {
+            window.location.href = '01邮件.html';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于长季酒店意外坠楼事故的情况说明</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 评论区样式 - 与新闻正文区分 */
+        /* 修改后的评论区样式 */
+
+        .comments-title {
+            font-size: 20px;
+            font-weight: 500;
+            color: #2C3A47;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .comments-title .comment-icon {
+            font-size: 20px;
+            color: #C49A6C;
+        }
+
+        .comment-item {
+            background-color: #F8FAFC;
+            border: 1px solid #E9ECF0;
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+        }
+
+        .comment-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .comment-header {
+            margin-bottom: 12px;
+        }
+
+        .comment-info {
+            flex: 1;
+        }
+
+        .comment-author {
+            font-weight: 500;
+            color: #2C3A47;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .comment-time {
+            color: #8A9AA8;
+            font-size: 12px;
+        }
+
+        .comment-content {
+            color: #3F4D5C;
+            line-height: 1.7;
+            font-size: 15px;
+            /* 移除 padding-left: 48px */
+        }
+
+        .comment-content p {
+            margin-bottom: 8px;
+        }
+
+        .comment-content p:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width: 1000px;">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高级私立中学</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <!-- 搜索栏 - 与官网样式一致，带主页图标 -->
+        <div class="search-bar">
+            <div class="search-group">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="输入关键词..." id="search-input">
+                    <button class="search-button" id="search-button">搜索</button>
+                </div>
+            </div>
+            <a href="29邮件.html" class="home-icon" title="返回工作台" target="_blank">🏠</a>
+        </div>
+
+        <div class="content-area">
+            <div class="back-button" onclick="history.back()">返回</div>
+
+            <div class="news-detail">
+                <div class="news-header">
+                    <h1 class="news-title">关于长季酒店意外坠楼事故的情况说明</h1>
+                    <div class="news-meta">
+                        <span>发布部门：外部新闻</span>
+                        <span>发布日期：2025.10.30</span>
+                        <span>阅读量：12,847</span>
+                    </div>
+                </div>
+                <div class="news-content">
+                    <p>据悉，10月28日晚9点左右，位于宁北市双合区的长季酒店发生一起坠楼事故。经公安部门现场勘查与调查取证，确认该起事故为意外坠楼事件。死者叶某为一名高中生，事故原因为酒店天台护栏松动导致失足坠落。</p>
+                    
+                    <p>事故发生后，酒店方已与死者家属达成赔偿协议；目前，长季酒店已暂时歇业关闭，进行安全隐患排查与整改。</p>
+                    
+                    <p>相关部门提醒各单位加强安全设施检查，防止类似事故再次发生。</p>
+                </div>
+
+                <!-- 评论区 -->
+                <div class="comments-section">
+                    
+                    <div class="comment-item">
+                        <div class="comment-header">
+                            <div class="comment-info">
+                                <div class="comment-author">@路人甲</div>
+                                <div class="comment-time">10-30 14:23</div>
+                            </div>
+                        </div>
+                        <div class="comment-content">
+                            <p>是不是宁北一高的学生啊，酒店和学校就隔了一条街</p>
+                        </div>
+                    </div>
+                    
+                    <div class="comment-item">
+                        <div class="comment-header">
+                            <div class="comment-info">
+                                <div class="comment-author">@路人乙</div>
+                                <div class="comment-time">10-30 15:47</div>
+                            </div>
+                        </div>
+                        <div class="comment-content">
+                            <p>我家孩子说不是，好像是外市的</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">36/100</span>
+    </div>
+
+    <script src="search.js"></script>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>

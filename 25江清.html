@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2023年度开学典礼顺利举行</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 图片样式 - 与新闻稿图片样式保持一致 */
+        .news-image {
+            margin: 32px 0 8px;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #E9ECF0;
+        }
+
+        .news-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .image-caption {
+            color: #8A9AA8;
+            font-size: 13px;
+            margin-bottom: 24px;
+            text-align: right;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width: 1000px;">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高级私立中学</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <!-- 修改后的搜索栏，添加 target="_blank" -->
+        <div class="search-bar">
+            <div class="search-group">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="输入关键词..." id="search-input">
+                    <button class="search-button" id="search-button">搜索</button>
+                </div>
+            </div>
+            <a href="09邮件.html" class="home-icon" title="返回工作台" target="_blank">🏠</a>
+        </div>
+
+        <div class="content-area">
+            <div class="back-button" onclick="history.back()">返回</div>
+
+            <div class="news-detail">
+                <div class="news-header">
+                    <h1 class="news-title">2024学年开学典礼顺利举行</h1>
+                    <div class="news-meta">
+                        <span>发布部门：校园新闻部</span>
+                        <span>发布日期：2024.09.02</span>
+                        <span>阅读量：2,567</span>
+                    </div>
+                </div>
+                <div class="news-content">
+                    <p>昨日上午，我校新学期开学典礼隆重举行。仪式上，学校对上学年表现优异的学生进行了表彰，并勉励全体师生在新学期再接再厉，共创佳绩。</p>
+                    
+                    <p>上学年综合成绩第一名的高二（7）班江雨薇作为学生代表上台发言。她回顾了过去一年的学习历程，感谢老师们的悉心指导与同学们的陪伴支持，鼓励大家脚踏实地，勇敢追梦。</p>
+                    
+                    <p>随后，江雨薇的母亲江清女士应邀上台，分享了自己的教育心得。她提到，尊重孩子的兴趣、培养独立思考的习惯，是她一直以来坚持的教育方式。同时，她也从家长角度对我校教育工作提出了建设性建议，本次开学典礼不仅为新学期拉开了序幕，也成为家校共育的一次温暖交流。</p>
+                    
+                    <p>期待全体圣樱学子在新学期里不负韶华，勇敢追梦，书写属于自己的精彩篇章。</p>
+                    
+                    <!-- 插入图片 -->
+                    <div class="news-image">
+                        <img src="https://s1.img-e.com/20260217/69942b6a78dd0.jpg" alt="开学典礼礼堂">
+                    </div>
+                    <div class="image-caption">举行开学典礼的礼堂 摄影师：林泽川</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">31/43</span>
+    </div>
+
+    <script src="search.js"></script>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>

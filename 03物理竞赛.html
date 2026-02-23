@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>物理竞赛金奖</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高级私立中学</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <!-- 修改后的搜索栏，添加 target="_blank" -->
+        <div class="search-bar">
+            <div class="search-group">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="输入关键词..." id="search-input">
+                    <button class="search-button" id="search-button">搜索</button>
+                </div>
+            </div>
+            <a href="01邮件.html" class="home-icon" title="返回工作台" target="_blank">🏠</a>
+        </div>
+
+
+        <div class="content-area">
+            <div class="back-button" onclick="history.back()">返回</div>
+
+            <div class="news-detail">
+                <div class="news-header">
+                    <h1 class="news-title">我校斩获2024年全国高中生物理竞赛团体金奖</h1>
+                    <div class="news-meta">
+                        <span>发布部门：校园新闻部</span>
+                        <span>发布日期：2024.09.28</span>
+                        <span>阅读量：3,862</span>
+                    </div>
+                </div>
+                <div class="news-content">
+                    <p>第七届全国高中生物理竞赛决赛在上周举行，经过三天激烈角逐，我校代表队荣获小组赛第一名。</p>
+                    
+                    <p>据悉，本届竞赛题目难度极高，已超出高中物理竞赛常规大纲。在赛后采访中，队长程述白直言“雨薇最先想到解题思路，她是所有参赛选手里最快的一个”。面对队长毫不掩饰的夸奖，江雨薇稍显害羞，她表示“队长分工明确，帮我们稳住了节奏”。</p>
+                    
+                    <p>领队周老师对本次竞赛结果十分满意，他在采访中提到“程述白和江雨薇的搭档非常默契，他们私下关系也不错，希望这两个孩子明年能继续大放光彩”。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">7/43</span>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+    </script>
+        <script src="search.js"></script>
+</body>
+</html>

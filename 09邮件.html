@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工作台</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+
+        .workspace {
+            display: flex;
+            flex-direction: column;
+            min-height: 700px;
+            position: relative;
+            width: 100%;
+        }
+
+        .main-panel {
+            display: flex;
+            flex: 1;
+            min-height: 600px;
+            width: 100%;
+        }
+
+        .left-sidebar {
+            width: 200px;
+            border-right: 1px solid #E9ECF0;
+            background-color: #F8FAFC;
+            padding: 30px 0;
+        }
+
+        .tab-item {
+            padding: 14px 24px;
+            font-size: 15px;
+            color: #64748B;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+            margin-bottom: 4px;
+        }
+
+        .tab-item.active {
+            background-color: #FFFFFF;
+            color: #2C3A47;
+            border-left: 3px solid #C49A6C;
+            font-weight: 500;
+        }
+
+        .tab-item:hover:not(.active) {
+            background-color: #F1F5F9;
+            color: #4A5A6A;
+        }
+
+        .content-area {
+            flex: 1;
+            background-color: #FFFFFF;
+            padding: 30px !important;
+            position: relative;
+            overflow-y: auto;
+            max-height: 700px;
+            max-width: none !important;
+            margin: 0 !important;
+        }
+
+        .mail-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 800px;
+        }
+
+        .mail-item {
+            display: grid;
+            grid-template-columns: 200px 180px 1fr 80px;
+            padding: 16px 20px;
+            background-color: #F8FAFC;
+            border: 1px solid #E9ECF0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            align-items: center;
+        }
+
+        .mail-item:hover {
+            background-color: #F1F5F9;
+            border-color: #C49A6C;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+
+        .mail-subject {
+            font-weight: 500;
+            color: #2C3A47;
+        }
+
+        .mail-from {
+            color: #64748B;
+        }
+
+        .mail-to {
+            color: #8A9AA8;
+            font-size: 13px;
+        }
+
+        .mail-date {
+            color: #94A3B8;
+            font-size: 13px;
+            text-align: right;
+        }
+
+        .new-badge {
+            background-color: #C49A6C;
+            color: white;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 30px;
+            margin-right: 8px;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .replied-badge {
+            background-color: #E2E8F0;
+            color: #64748B;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 30px;
+            margin-left: 8px;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .school-header {
+            font-size: 24px;
+            font-weight: 500;
+            color: #2C3A47;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #E2D5C0;
+            letter-spacing: 0.5px;
+        }
+
+        .intro-section {
+            background-color: #F8FAFC;
+            border-radius: 18px;
+            padding: 28px;
+            margin-bottom: 36px;
+            border: 1px solid #E9ECF0;
+            line-height: 1.8;
+            color: #3F4D5C;
+            font-size: 15px;
+        }
+
+        .intro-section p {
+            margin-bottom: 18px;
+        }
+
+        .intro-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .announcement-title {
+            font-size: 20px;
+            font-weight: 500;
+            color: #2C3A47;
+            margin-bottom: 20px;
+        }
+
+        .announcement-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .announcement-item {
+            padding: 16px 20px;
+            background-color: #F8FAFC;
+            border: 1px solid #E9ECF0;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 16px;
+            color: #2C3A47;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .announcement-item:hover {
+            background-color: #F1F5F9;
+            border-color: #C49A6C;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px -6px rgba(0,0,0,0.05);
+        }
+
+        .announcement-badge {
+            background-color: #E2D5C0;
+            color: #4A5A6A;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-weight: 500;
+        }
+
+        .announcement-date {
+            color: #8A9AA8;
+            font-size: 13px;
+            margin-left: auto;
+        }
+
+        .notice-detail {
+            max-width: 800px;
+        }
+
+        .notice-detail h2 {
+            font-size: 24px;
+            font-weight: 500;
+            color: #2C3A47;
+            margin-bottom: 16px;
+        }
+
+        .notice-meta {
+            color: #8A9AA8;
+            font-size: 14px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #E9ECF0;
+        }
+
+        .notice-content {
+            line-height: 1.8;
+            color: #3F4D5C;
+            font-size: 15px;
+        }
+
+        .notice-content p {
+            margin-bottom: 20px;
+        }
+
+        .back-link {
+            margin-top: 32px;
+            color: #C49A6C;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* 邮件弹窗样式 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(3px);
+        }
+
+        .modal-container {
+            max-width: 650px;
+            width: 90%;
+            background-color: #FFFFFF;
+            border-radius: 28px;
+            box-shadow: 0 30px 60px -20px rgba(0,0,0,0.3);
+            border: 1px solid #E9ECF0;
+            overflow: hidden;
+            animation: modal-appear 0.2s ease;
+        }
+
+        @keyframes modal-appear {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 22px 28px;
+            border-bottom: 1px solid #E9ECF0;
+            background-color: #F8FAFC;
+            position: relative;
+        }
+
+        .modal-header .close-btn {
+            position: absolute;
+            right: 28px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .modal-header h3 {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 500;
+            color: #2C3A47;
+            margin: 0;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #94A3B8;
+            transition: all 0.2s;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-btn:hover {
+            background-color: #F1F5F9;
+            color: #4A5A6A;
+        }
+
+        .modal-body {
+            padding: 28px;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .email-meta {
+            background-color: #F8FAFC;
+            padding: 16px 20px;
+            border-radius: 16px;
+            margin-bottom: 28px;
+            border: 1px solid #E9ECF0;
+            font-size: 14px;
+            color: #4A5A6A;
+            line-height: 1.8;
+        }
+
+        .email-meta div {
+            margin-bottom: 6px;
+        }
+
+        .email-meta .label {
+            color: #8A9AA8;
+            width: 70px;
+            display: inline-block;
+        }
+
+        .email-content {
+            color: #2C3A47;
+            line-height: 1.8;
+            font-size: 15px;
+            white-space: pre-line;
+        }
+
+        .email-content p {
+            margin-bottom: 20px;
+        }
+
+        .email-highlight {
+            font-weight: 600;
+            color: #2C3A47;
+            background-color: #F8F2E9;
+            padding: 0 4px;
+        }
+
+        .modal-footer {
+            padding: 20px 28px 28px;
+            border-top: 1px solid #E9ECF0;
+            text-align: right;
+        }
+
+        .btn-reply {
+            background-color: #4A5A6A;
+            color: white;
+            border: none;
+            padding: 12px 36px;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #5D6F80;
+        }
+
+        .btn-reply:hover {
+            background-color: #5D6F80;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px -6px rgba(58,74,94,0.3);
+        }
+
+        .btn-reply-disabled {
+            background-color: #E2E8F0;
+            color: #8A9AA8;
+            border: 1px solid #D0D9E2;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .btn-reply-disabled:hover {
+            background-color: #E2E8F0;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            background-color: #FFFFFF;
+            color: #4A5A6A;
+            border: 1px solid #C49A6C;
+            padding: 12px 36px;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: #F8F2E9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px -6px rgba(196,154,108,0.3);
+        }
+
+        /* 论坛登录弹窗样式 */
+        .login-form {
+            margin-top: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            color: #4A5A6A;
+            margin-bottom: 6px;
+        }
+
+        .form-input {
+            width: 70%;
+            max-width: 280px;
+            padding: 12px 16px;
+            border: 1px solid #E2E8F0;
+            border-radius: 40px;
+            font-size: 14px;
+            background-color: #F8FAFC;
+            transition: all 0.2s;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #C49A6C;
+            background-color: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(196,154,108,0.1);
+        }
+
+        .login-error {
+            color: #C45A6C;
+            font-size: 14px;
+            margin-top: 12px;
+            text-align: center;
+            min-height: 20px;
+        }
+
+        .btn-login {
+            background-color: #4A5A6A;
+            color: white;
+            border: none;
+            padding: 14px 36px;
+            border-radius: 40px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #5D6F80;
+            width: auto;
+            min-width: 140px;
+            max-width: 180px;
+            margin: 16px auto 0;
+            display: block;
+        }
+
+        .btn-login:hover {
+            background-color: #5D6F80;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px -6px rgba(58,74,94,0.3);
+        }
+
+        /* 邮箱验证弹窗样式 - 扩展为通用问卷弹窗 */
+        .email-verify-container {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .email-hint {
+            color: #4A5A6A;
+            font-size: 15px;
+            margin-bottom: 16px;
+        }
+
+        .email-input-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            margin-bottom: 20px;
+        }
+
+        .email-prefix {
+            width: 180px;
+            padding: 12px 16px;
+            border: 1px solid #E2E8F0;
+            border-radius: 40px 0 0 40px;
+            font-size: 14px;
+            background-color: #F8FAFC;
+            transition: all 0.2s;
+            text-align: right;
+        }
+
+        .email-prefix:focus {
+            outline: none;
+            border-color: #C49A6C;
+            background-color: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(196,154,108,0.1);
+        }
+
+        .email-domain {
+            background-color: #E2E8F0;
+            color: #4A5A6A;
+            padding: 12px 20px;
+            border-radius: 0 40px 40px 0;
+            font-size: 14px;
+            white-space: nowrap;
+            border: 1px solid #E2E8F0;
+            border-left: none;
+        }
+
+        .email-error {
+            color: #C45A6C;
+            font-size: 14px;
+            margin-top: 12px;
+            text-align: center;
+            min-height: 20px;
+        }
+
+        .btn-email-submit {
+            background-color: #4A5A6A;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #5D6F80;
+            width: auto;
+            min-width: 120px;
+            margin: 16px auto 0;
+            display: block;
+        }
+
+        .btn-email-submit:hover {
+            background-color: #5D6F80;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px -6px rgba(58,74,94,0.3);
+        }
+
+        /* 选择题样式 */
+        .quiz-section {
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #E9ECF0;
+        }
+
+        .quiz-question {
+            color: #2C3A47;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            text-align: left;
+        }
+
+        .quiz-options {
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .quiz-option-btn {
+            background-color: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            color: #4A5A6A;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 120px;
+        }
+
+        .quiz-option-btn:hover {
+            background-color: #F1F5F9;
+            border-color: #C49A6C;
+        }
+
+        .quiz-option-btn.selected {
+            background-color: #C49A6C;
+            color: white;
+            border-color: #C49A6C;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background-color: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .checkbox-item:hover {
+            background-color: #F1F5F9;
+            border-color: #C49A6C;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #C49A6C;
+        }
+
+        .checkbox-item label {
+            cursor: pointer;
+            color: #4A5A6A;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .progress-corner {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #FFFFFF;
+            border: 1px solid #E9ECF0;
+            border-radius: 40px;
+            padding: 8px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            font-size: 14px;
+            color: #8A9AA8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(4px);
+            background-color: rgba(255,255,255,0.9);
+            z-index: 1100;
+        }
+
+        .progress-value {
+            font-weight: 500;
+            color: #4A5A6A;
+            background-color: #F1F5F9;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 13px;
+        }
+
+        /* 论坛登录信息 - 紧凑行间距 */
+        .forum-login-info p {
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+        .forum-login-info p:first-of-type {
+            margin-top: 16px;
+        }
+
+        /* 论坛登录弹窗 - 更紧凑的尺寸 */
+        #forum-login-modal .modal-container {
+            max-width: 380px;
+        }
+
+        #forum-login-modal .modal-body {
+            padding: 20px;
+        }
+
+        #forum-login-modal .login-form {
+            margin-top: 8px;
+        }
+
+        #forum-login-modal .form-group {
+            margin-bottom: 16px;
+        }
+
+        #forum-login-modal .form-input {
+            width: 85%;
+            max-width: 260px;
+        }
+
+        #forum-login-modal .btn-login {
+            margin-top: 12px;
+            padding: 12px 30px;
+            min-width: 130px;
+        }
+
+        /* 邮箱验证弹窗 - 紧凑尺寸 */
+        #email-verify-modal .modal-container {
+            max-width: 500px;
+        }
+
+        @media (max-width: 800px) {
+            .mail-item {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .mail-date {
+                text-align: left;
+            }
+            .left-sidebar {
+                width: 120px;
+            }
+            .email-input-wrapper {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .email-prefix {
+                border-radius: 40px;
+                width: 100%;
+                text-align: left;
+            }
+            .email-domain {
+                border-radius: 40px;
+                border-left: 1px solid #E2E8F0;
+                width: 100%;
+                text-align: center;
+            }
+            .quiz-options, .checkbox-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .quiz-option-btn, .checkbox-item {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高级私立中学</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <div class="workspace">
+        <div class="search-bar">
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="输入关键词..." id="search-input">
+                <button class="search-button" id="search-button">搜索</button>
+            </div>
+        </div>
+
+            <div class="main-panel">
+                <div class="left-sidebar">
+                    <div class="tab-item active" id="tab-mail">📧 邮件</div>
+                    <div class="tab-item" id="tab-website">🌐 圣樱高中官网</div>
+                </div>
+
+                <div class="content-area" id="page-mail">
+                    <div class="mail-list">
+                        <!-- 新邮件 - 排在最前面，带【新】标注 -->
+                        <div class="mail-item" id="mail-new">
+                            <span class="mail-subject">
+                                <span class="new-badge">新</span>
+                                委托邮件回复
+                            </span>
+                            <span class="mail-from">匿名用户</span>
+                            <span class="mail-to">收件人：kanming</span>
+                            <span class="mail-date">2月16日</span>
+                        </div>
+                        
+                        <!-- 原邮件 - 可点击查看，带已回复标签 -->
+                        <div class="mail-item" id="mail-1">
+                            <span class="mail-subject">
+                                委托咨询：高中少女早恋
+                            </span>
+                            <span class="mail-from">匿名用户</span>
+                            <span class="mail-to">收件人：kanming</span>
+                            <span class="mail-date">2月15日</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-area hidden" id="page-website">
+                    <div class="school-header">圣樱高级私立中学</div>
+                    <div class="intro-section">
+                        <p>圣樱高级私立中学坐落于宁南市北梧区晴山南麓，依山面海，四季温润。校园内樱林掩道、梧桐成荫，被誉为“宁南最美校园”。</p>
+                        <p>学校于1997年创办，初衷是为本市适龄学生提供接轨国际的高中教育。三十年来，圣樱始终秉持“小而精”的办学理念，严格控制招生规模，致力于为每一位学生提供定制化的成长路径。</p>
+                        <p>圣樱校训为“致知·修身·济世”，意在引导学生求知求真、涵养品格、心怀天下。</p>
+                    </div>
+                    <div class="announcement-title">📢 校园公告</div>
+                    <div class="announcement-list">
+                        <div class="announcement-item" data-page="notice-forum">
+                            <span class="announcement-badge">新</span>
+                            圣樱高校官方论坛正式上线
+                            <span class="announcement-date">2025.04.01</span>
+                        </div>
+                        <div class="announcement-item" data-page="notice-library">
+                            <span class="announcement-badge">新</span>
+                            圣樱·季风图书馆即将开放
+                            <span class="announcement-date">2025.02.27</span>
+                        </div>
+                        <div class="announcement-item" data-page="notice-evaluation">
+                            关于优化学生评价制度的通知
+                            <span class="announcement-date">2024.07.25</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-area hidden" id="page-notice-forum">
+                    <div class="notice-detail">
+                        <h2>圣樱高校官方论坛正式上线</h2>
+                        <div class="notice-meta">发布部门：学生发展中心   发布日期：2025.04.01</div>
+                        <div class="notice-content">
+                            <p>为加强家校沟通，促进学生之间健康有序的交流互动，学校官方论坛即日起正式上线运行。</p>
+                            <p>此为圣樱建校以来首个官方认证的学生网络社区，旨在为全体在校生提供一个安全、友善、有归属感的线上交流空间。</p>
+                            <p>该论坛仅向在校师生家长开放，请认证登录，文明发言，合规交流。</p>
+                            <!-- 修改这里：添加ID用于点击事件 -->
+                            <p style="margin-top:24px; color:#C49A6C; cursor:pointer;" id="enter-forum-link">【点此进入论坛】</p>
+                        </div>
+                        <div class="back-link" data-back="website">← 返回官网首页</div>
+                    </div>
+                </div>
+
+                <div class="content-area hidden" id="page-notice-library">
+                    <div class="notice-detail">
+                        <h2>圣樱·季风图书馆即将开放</h2>
+                        <div class="notice-meta">发布部门：总务处   发布日期：2025.02.27</div>
+                        <div class="notice-content">
+                            <p>经过18个月精心建设，圣樱高级私立中学新图书馆——“季风图书馆”将于本月正式向师生开放。</p>
+                            <p>馆内设有独立学习位216个、小组研讨室12间，配备智能预约系统，学生可在线预订。</p>
+                            <p style="margin-top:24px; color:#8A9AA8; font-size:14px;">特别鸣谢：季氏集团捐赠6000万元</p>
+                        </div>
+                        <div class="back-link" data-back="website">← 返回官网首页</div>
+                    </div>
+                </div>
+
+                <div class="content-area hidden" id="page-notice-evaluation">
+                    <div class="notice-detail">
+                        <h2>关于优化学生评价制度的通知</h2>
+                        <div class="notice-meta">发布部门：教务处   发布日期：2024.07.25</div>
+                        <div class="notice-content">
+                            <p>经校务会研究决定，自即日起对我校学生评价体系作如下优化调整：</p>
+                            <p>一、优化考试结果呈现方式</p>
+                            <p>为减轻学生学业压力，学校决定不再公布具体考试排名。期中、期末及阶段性测试成绩将以ABC等级制呈现；</p>
+                            <p>二、设立“未来代言人”年度评选</p>
+                            <p>为鼓励学生全面发展，自本学年起每学期评选一名“未来代言人”，作为圣樱最高教育荣誉的代表；</p>
+                            <p>“未来代言人”不唯分数论，而是综合考量多项指标，学校将为代言人颁发奖杯与证书。</p>
+                        </div>
+                        <div class="back-link" data-back="website">← 返回官网首页</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 原邮件弹窗 - 可查看，但回复按钮置灰 -->
+    <div class="modal-overlay hidden" id="email-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>委托咨询：高中少女早恋</h3>
+                <button class="close-btn" id="close-modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="email-meta">
+                    <div><span class="label">发件人：</span>匿名用户 xxxxxxxxx@mail.com</div>
+                    <div><span class="label">收件人：</span>kanming@mail.com</div>
+                    <div><span class="label">时间：</span>2026年2月15日 19:43</div>
+                </div>
+                <div class="email-content">
+                    <p>您好，恕我冒昧打扰。经友人推荐，我想委托您调查我女儿的恋爱情况。</p>
+                    <p>这听起来像个控制欲过头的变态母亲，但事实上我们母女关系非常健康，只是最近她开始变得情绪无常、频频崩溃，我怀疑和恋爱有关，也许对方并不值得托付，我需要了解更多才能做出正确的干预。</p>
+                    <p>我有<span class="email-highlight">3个怀疑对象</span>，都是她的同校同学，作为测试，请您<span class="email-highlight">找出他们的真实姓名并匹配身份</span>；提交正确答案后，我会支付下一笔佣金。</p>
+                    <p>我的女儿就读于<span class="email-highlight">圣樱高级私立中学</span>，学校官网已经锁定至您的桌面主栏，我希望您能专心处理我的委托。</p>
+                    <p>我女儿名叫<span class="email-highlight">江雨薇</span>。</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-reply btn-reply-disabled" id="reply-btn" disabled>已回复</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新邮件弹窗 - 可回复状态 -->
+    <div class="modal-overlay hidden" id="new-email-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>邮件回复：高中少女早恋</h3>
+                <button class="close-btn" id="close-new-modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="email-meta">
+                    <div><span class="label">发件人：</span>匿名用户 xxxxxxxxx@mail.com</div>
+                    <div><span class="label">收件人：</span>kanming@mail.com</div>
+                    <div><span class="label">时间：</span>2026年2月16日 10:23</div>
+                </div>
+                <div class="email-content">
+                    <p>您的回答完全正确。没有辜负我的期望。</p>
+                    
+                    <p>……但目前证据还不足，无法锁定我女儿真正的早恋对象。为了协助您的调查，我为您申请了学校内部账号，您现在可以登录<span class="email-highlight">校园论坛</span>，搜索更多资料。不过账号功能受限，只能浏览，无法互动私信。</p>
+                    
+                    <p>我的<span class="email-highlight">邮箱前缀</span>是我<span class="email-highlight">真实姓名的完整拼音</span>。等你破解之后再找我吧。</p>
+                    
+                </div>
+                <div class="forum-login-info">
+                    <p>圣樱高校论坛登录：</p>
+                    <p>账号：linshizhanghao</p>
+                    <p>密码：889556</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-reply" id="reply-new-btn">回复邮件</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 论坛登录弹窗 -->
+    <div class="modal-overlay hidden" id="forum-login-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 style="text-align: center;">圣樱高校学生认证</h3>
+                <button class="close-btn" id="close-forum-login">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="login-form">
+                    <div class="form-group">
+                        <label class="form-label">账号</label>
+                        <input type="text" class="form-input" id="forum-username">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">密码</label>
+                        <input type="password" class="form-input" id="forum-password">
+                    </div>
+                    
+                    <div class="login-error" id="forum-login-error"></div>
+                    
+                    <button class="btn-login" id="forum-login-btn">登录</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 邮箱验证弹窗（扩展为问卷弹窗） -->
+    <div class="modal-overlay hidden" id="email-verify-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>验证信息</h3>
+                <button class="close-btn" id="close-email-verify">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="email-verify-container">
+                    <!-- 邮箱验证部分 -->
+                    <div class="email-hint">请填写委托人的邮箱地址</div>
+                    <div class="email-input-wrapper">
+                        <input type="text" class="email-prefix" id="email-prefix" placeholder="请输入邮箱前缀">
+                        <span class="email-domain">@mail.com</span>
+                    </div>
+                    
+                    <!-- 第一题：江雨薇的真实情况 -->
+                    <div class="quiz-section">
+                        <div class="quiz-question">1. 江雨薇的真实情况是？</div>
+                        <div class="quiz-options">
+                            <button class="quiz-option-btn" id="quiz-love">谈恋爱了</button>
+                            <button class="quiz-option-btn" id="quiz-bully">被霸凌了</button>
+                        </div>
+                    </div>
+                    
+                    <!-- 第二题：与这件事有关的人物（多选） -->
+                    <div class="quiz-section">
+                        <div class="quiz-question">2. 与这件事有关的人物是？（可多选）</div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="person-cheng" value="程述白">
+                                <label for="person-cheng">程述白</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="person-lin" value="林泽川">
+                                <label for="person-lin">林泽川</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="person-li" value="李远明">
+                                <label for="person-li">李远明</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 存储选择的状态 -->
+                    <input type="hidden" id="selected-situation" value="">
+                    
+                    <div class="email-error" id="email-error"></div>
+                    
+                    <button class="btn-email-submit" id="email-submit">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">2/43</span>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // 页面切换逻辑
+        const pageProgressMap = {
+            'mail': 1,
+            'website': 2,
+            'notice-forum': 3,
+            'notice-library': 4,
+            'notice-evaluation': 5
+        };
+
+        const pages = {
+            mail: document.getElementById('page-mail'),
+            website: document.getElementById('page-website'),
+            'notice-forum': document.getElementById('page-notice-forum'),
+            'notice-library': document.getElementById('page-notice-library'),
+            'notice-evaluation': document.getElementById('page-notice-evaluation')
+        };
+
+        const tabMail = document.getElementById('tab-mail');
+        const tabWebsite = document.getElementById('tab-website');
+        const progressElement = document.getElementById('progress-value');
+
+        function showPage(pageId) {
+            Object.values(pages).forEach(page => {
+                if (page) page.classList.add('hidden');
+            });
+            if (pages[pageId]) {
+                pages[pageId].classList.remove('hidden');
+            }
+            if (pageId === 'mail') {
+                tabMail.classList.add('active');
+                tabWebsite.classList.remove('active');
+            } else {
+                tabWebsite.classList.add('active');
+                tabMail.classList.remove('active');
+            }
+            const progress = pageProgressMap[pageId] || 1;
+            progressElement.textContent = `${progress}/43`;
+            window.location.hash = pageId;
+        }
+
+        function initFromHash() {
+            const hash = window.location.hash.substring(1);
+            if (hash && pages[hash]) {
+                showPage(hash);
+            } else {
+                showPage('mail');
+                // 确保邮件页默认进度为0/100
+                progressElement.textContent = '0/43';
+            }
+        }
+
+        window.addEventListener('hashchange', function() {
+            const hash = window.location.hash.substring(1);
+            if (hash && pages[hash]) {
+                showPage(hash);
+            }
+        });
+
+        tabMail.addEventListener('click', function() {
+            showPage('mail');
+        });
+
+        tabWebsite.addEventListener('click', function() {
+            showPage('website');
+        });
+
+        document.querySelectorAll('[data-page]').forEach(item => {
+            item.addEventListener('click', function() {
+                const pageId = this.getAttribute('data-page');
+                showPage(pageId);
+            });
+        });
+
+        document.querySelectorAll('[data-back]').forEach(link => {
+            link.addEventListener('click', function() {
+                const backTo = this.getAttribute('data-back');
+                showPage(backTo);
+            });
+        });
+
+        // ========== 邮件弹窗逻辑 ==========
+        const oldMailItem = document.getElementById('mail-1');
+        const newMailItem = document.getElementById('mail-new');
+        const oldEmailModal = document.getElementById('email-modal');
+        const newEmailModal = document.getElementById('new-email-modal');
+        const closeOldModal = document.getElementById('close-modal');
+        const closeNewModal = document.getElementById('close-new-modal');
+        const replyNewBtn = document.getElementById('reply-new-btn');
+
+        // 打开原邮件弹窗（可查看）
+        oldMailItem.addEventListener('click', function() {
+            oldEmailModal.classList.remove('hidden');
+            progressElement.textContent = '1/43';
+        });
+
+        // 关闭旧邮件弹窗
+        closeOldModal.addEventListener('click', function() {
+            oldEmailModal.classList.add('hidden');
+            progressElement.textContent = '0/43';
+        });
+
+        // 打开新邮件弹窗
+        newMailItem.addEventListener('click', function() {
+            newEmailModal.classList.remove('hidden');
+            progressElement.textContent = '14/43';
+        });
+
+        // 关闭新邮件弹窗（×按钮）
+        closeNewModal.addEventListener('click', function() {
+            newEmailModal.classList.add('hidden');
+            progressElement.textContent = '0/43';
+        });
+
+        // 点击背景关闭所有弹窗
+        oldEmailModal.addEventListener('click', function(e) {
+            if (e.target === oldEmailModal) {
+                oldEmailModal.classList.add('hidden');
+                progressElement.textContent = '0/43';
+            }
+        });
+
+        newEmailModal.addEventListener('click', function(e) {
+            if (e.target === newEmailModal) {
+                newEmailModal.classList.add('hidden');
+                progressElement.textContent = '0/43';
+            }
+        });
+
+        // ========== 论坛登录弹窗逻辑 ==========
+        const enterForumLink = document.getElementById('enter-forum-link');
+        const forumLoginModal = document.getElementById('forum-login-modal');
+        const closeForumLogin = document.getElementById('close-forum-login');
+        const forumLoginBtn = document.getElementById('forum-login-btn');
+        const forumUsername = document.getElementById('forum-username');
+        const forumPassword = document.getElementById('forum-password');
+        const forumLoginError = document.getElementById('forum-login-error');
+
+        // 点击“点此进入论坛”打开登录弹窗
+        enterForumLink.addEventListener('click', function() {
+            forumLoginModal.classList.remove('hidden');
+            // 清空之前输入的内容和错误信息
+            forumUsername.value = '';
+            forumPassword.value = '';
+            forumLoginError.textContent = '';
+        });
+
+        // 关闭论坛登录弹窗（×按钮）
+        closeForumLogin.addEventListener('click', function() {
+            forumLoginModal.classList.add('hidden');
+        });
+
+        // 点击背景关闭论坛登录弹窗
+        forumLoginModal.addEventListener('click', function(e) {
+            if (e.target === forumLoginModal) {
+                forumLoginModal.classList.add('hidden');
+            }
+        });
+
+        // 论坛登录验证
+        forumLoginBtn.addEventListener('click', function() {
+            const username = forumUsername.value.trim();
+            const password = forumPassword.value.trim();
+
+            if (!username || !password) {
+                forumLoginError.textContent = '请输入账号和密码';
+                return;
+            }
+
+            // 验证账号密码
+            if (username === 'linshizhanghao' && password === '889556') {
+                // 正确，在新标签页打开论坛页面
+                window.open('10论坛.html', '_blank');
+                // 关闭当前弹窗
+                forumLoginModal.classList.add('hidden');
+            } else {
+                forumLoginError.textContent = '账号/密码错误';
+            }
+        });
+
+        // 回车键登录
+        forumPassword.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                forumLoginBtn.click();
+            }
+        });
+
+        // ========== 问卷弹窗逻辑 ==========
+        const emailVerifyModal = document.getElementById('email-verify-modal');
+        const closeEmailVerify = document.getElementById('close-email-verify');
+        const emailPrefix = document.getElementById('email-prefix');
+        const emailError = document.getElementById('email-error');
+        const emailSubmit = document.getElementById('email-submit');
+        
+        // 选择题按钮
+        const quizLove = document.getElementById('quiz-love');
+        const quizBully = document.getElementById('quiz-bully');
+        const selectedSituation = document.getElementById('selected-situation');
+        
+        // 多选框
+        const personCheng = document.getElementById('person-cheng');
+        const personLin = document.getElementById('person-lin');
+        const personLi = document.getElementById('person-li');
+
+        // 点击新邮件中的回复邮件按钮：打开问卷弹窗
+        replyNewBtn.addEventListener('click', function() {
+            newEmailModal.classList.add('hidden');
+            emailVerifyModal.classList.remove('hidden');
+            // 清空之前输入的内容和错误信息
+            emailPrefix.value = '';
+            emailError.textContent = '';
+            
+            // 重置选择题状态
+            quizLove.classList.remove('selected');
+            quizBully.classList.remove('selected');
+            selectedSituation.value = '';
+            
+            // 重置多选框
+            personCheng.checked = false;
+            personLin.checked = false;
+            personLi.checked = false;
+        });
+
+        // 第一题选项点击事件
+        quizLove.addEventListener('click', function() {
+            quizLove.classList.add('selected');
+            quizBully.classList.remove('selected');
+            selectedSituation.value = 'love';
+        });
+
+        quizBully.addEventListener('click', function() {
+            quizBully.classList.add('selected');
+            quizLove.classList.remove('selected');
+            selectedSituation.value = 'bully';
+        });
+
+        // 关闭问卷弹窗
+        closeEmailVerify.addEventListener('click', function() {
+            emailVerifyModal.classList.add('hidden');
+        });
+
+        // 点击背景关闭问卷弹窗
+        emailVerifyModal.addEventListener('click', function(e) {
+            if (e.target === emailVerifyModal) {
+                emailVerifyModal.classList.add('hidden');
+            }
+        });
+
+        // 问卷提交
+        emailSubmit.addEventListener('click', function() {
+            const prefix = emailPrefix.value.trim();
+            
+            if (prefix === '') {
+                emailError.textContent = '请输入邮箱前缀';
+                return;
+            }
+
+            // 检查第一题是否已选择
+            if (!selectedSituation.value) {
+                emailError.textContent = '请选择江雨薇的真实情况';
+                return;
+            }
+
+            // 检查是否至少选择了一个人物
+            if (!personCheng.checked && !personLin.checked && !personLi.checked) {
+                emailError.textContent = '请至少选择一位相关人物';
+                return;
+            }
+
+            // 验证邮箱前缀
+            if (prefix === 'jiangqing') {
+                // 根据第一题的选择跳转
+                if (selectedSituation.value === 'love') {
+                    window.location.href = '结局E.html';
+                } else if (selectedSituation.value === 'bully') {
+                    window.location.href = '29邮件.html';
+                }
+            } else {
+                emailError.textContent = '你似乎还需要再想想';
+            }
+        });
+
+        // 回车键验证
+        emailPrefix.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                emailSubmit.click();
+            }
+        });
+
+
+        initFromHash();
+    </script>
+    <script src="search.js"></script>
+</body>
+</html>

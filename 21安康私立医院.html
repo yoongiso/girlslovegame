@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026春季学期学生体检结果通知</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 页面特定样式 */
+        .query-button {
+            background-color: #4A5A6A;
+            color: white;
+            border: none;
+            padding: 14px 36px;
+            border-radius: 40px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #5D6F80;
+            display: inline-block;
+            margin: 32px 0 16px;
+        }
+
+        .query-button:hover {
+            background-color: #5D6F80;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px -6px rgba(58,74,94,0.3);
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        /* 弹窗样式 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(3px);
+        }
+
+        .modal-container {
+            max-width: 400px;
+            width: 90%;
+            background-color: #FFFFFF;
+            border-radius: 28px;
+            box-shadow: 0 30px 60px -20px rgba(0,0,0,0.3);
+            border: 1px solid #E9ECF0;
+            overflow: hidden;
+            animation: modal-appear 0.2s ease;
+        }
+
+        @keyframes modal-appear {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 22px 28px;
+            border-bottom: 1px solid #E9ECF0;
+            background-color: #F8FAFC;
+            position: relative;
+        }
+
+        .modal-header .close-btn {
+            position: absolute;
+            right: 28px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #94A3B8;
+            transition: all 0.2s;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .modal-header .close-btn:hover {
+            background-color: #F1F5F9;
+            color: #4A5A6A;
+        }
+
+        .modal-header h3 {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 500;
+            color: #2C3A47;
+            margin: 0;
+        }
+
+        .modal-body {
+            padding: 28px;
+        }
+
+        .query-form {
+            margin-top: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            color: #4A5A6A;
+            margin-bottom: 6px;
+        }
+
+        .form-input {
+            width: 85%;
+            max-width: 280px;
+            padding: 12px 16px;
+            border: 1px solid #E2E8F0;
+            border-radius: 40px;
+            font-size: 14px;
+            background-color: #F8FAFC;
+            transition: all 0.2s;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #C49A6C;
+            background-color: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(196,154,108,0.1);
+        }
+
+        .query-error {
+            color: #C45A6C;
+            font-size: 14px;
+            margin-top: 12px;
+            text-align: center;
+            min-height: 20px;
+        }
+
+        .btn-query-submit {
+            background-color: #4A5A6A;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #5D6F80;
+            width: auto;
+            min-width: 120px;
+            margin: 16px auto 0;
+            display: block;
+        }
+
+        .btn-query-submit:hover {
+            background-color: #5D6F80;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px -6px rgba(58,74,94,0.3);
+        }
+
+        /* 图片弹窗样式 */
+        .image-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+        }
+
+        .image-modal-container {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .image-modal-container img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 12px;
+            border: 2px solid #4A5568;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            cursor: default;
+        }
+
+        .image-modal-close {
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            background: none;
+            border: none;
+            font-size: 32px;
+            cursor: pointer;
+            color: #FFFFFF;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(0,0,0,0.5);
+            transition: all 0.2s;
+        }
+
+        .image-modal-close:hover {
+            background-color: rgba(196,154,108,0.8);
+            transform: scale(1.1);
+        }
+
+        .image-close-hint {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #FFFFFF;
+            font-size: 14px;
+            background-color: rgba(0,0,0,0.5);
+            padding: 4px 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .back-button {
+            margin-left: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width: 1000px;">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高级私立中学</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <!-- 修改后的搜索栏，添加 target="_blank" -->
+        <div class="search-bar">
+            <div class="search-group">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="输入关键词..." id="search-input">
+                    <button class="search-button" id="search-button">搜索</button>
+                </div>
+            </div>
+            <a href="09邮件.html" class="home-icon" title="返回工作台" target="_blank">🏠</a>
+        </div>
+
+        <div class="content-area">
+            <div class="back-button" onclick="history.back()">返回</div>
+
+            <div class="news-detail">
+                <div class="news-header">
+                    <h1 class="news-title">2025秋季学期学生体检结果通知</h1>
+                    <div class="news-meta">
+                        <span>发布部门：圣樱医务室</span>
+                        <span>发布日期：2025.11.04</span>
+                        <span>阅读量：1,234</span>
+                    </div>
+                </div>
+                <div class="news-content">
+                    <p>本学期全校学生体检工作已顺利结束，即日起可查询体检结果。</p>
+                    <p>本次体检由安康私立医院合作开展。作为一家综合性医疗机构，安康私立医院拥有先进的医疗设备和专业的体检团队，连续多年为我校提供新生入学体检及春季学期常规检查服务，为本校学生健康监测工作提供了有力支持。</p>
+                    <p>体检报告现已完成整理归档，可点击页面下方按钮，输入姓名及学号查看详细结果。</p>
+                    <p>祝同学们身体健康，学业进步！</p>
+                    
+                    <div class="button-container">
+                        <button class="query-button" id="query-button">结果查询</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 查询弹窗 -->
+    <div class="modal-overlay hidden" id="query-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>体检结果查询</h3>
+                <button class="close-btn" id="close-modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="query-form">
+                    <div class="form-group">
+                        <label class="form-label">请输入姓名+学号</label>
+                        <input type="text" class="form-input" id="student-input" placeholder="例如：张薇0312">
+                    </div>
+                    
+                    <div class="query-error" id="query-error"></div>
+                    
+                    <button class="btn-query-submit" id="query-submit">查询</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 图片弹窗 -->
+    <div class="image-modal-overlay hidden" id="image-modal">
+        <div class="image-modal-container">
+            <img id="modal-image" src="" alt="体检报告">
+            <button class="image-modal-close" id="close-image-modal">×</button>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">26/43</span>
+    </div>
+
+    <script src="search.js"></script>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // 查询弹窗逻辑
+        const queryButton = document.getElementById('query-button');
+        const queryModal = document.getElementById('query-modal');
+        const closeModal = document.getElementById('close-modal');
+        const querySubmit = document.getElementById('query-submit');
+        const studentInput = document.getElementById('student-input');
+        const queryError = document.getElementById('query-error');
+
+        // 图片弹窗逻辑
+        const imageModal = document.getElementById('image-modal');
+        const modalImage = document.getElementById('modal-image');
+        const closeImageModal = document.getElementById('close-image-modal');
+
+        // 打开图片弹窗
+        function showImage(imageUrl) {
+            modalImage.src = imageUrl;
+            imageModal.classList.remove('hidden');
+            // 同时关闭查询弹窗
+            queryModal.classList.add('hidden');
+        }
+
+        // 关闭图片弹窗
+        function closeImage() {
+            imageModal.classList.add('hidden');
+            modalImage.src = '';
+        }
+
+        // 打开查询弹窗
+        queryButton.addEventListener('click', function() {
+            queryModal.classList.remove('hidden');
+            studentInput.value = '';
+            queryError.textContent = '';
+        });
+
+        // 关闭查询弹窗
+        closeModal.addEventListener('click', function() {
+            queryModal.classList.add('hidden');
+        });
+
+        // 点击背景关闭查询弹窗
+        queryModal.addEventListener('click', function(e) {
+            if (e.target === queryModal) {
+                queryModal.classList.add('hidden');
+            }
+        });
+
+        // 点击背景关闭图片弹窗
+        imageModal.addEventListener('click', function(e) {
+            if (e.target === imageModal) {
+                closeImage();
+            }
+        });
+
+        // 点击×按钮关闭图片弹窗
+        closeImageModal.addEventListener('click', function() {
+            closeImage();
+        });
+
+        // ESC关闭弹窗
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                if (!queryModal.classList.contains('hidden')) {
+                    queryModal.classList.add('hidden');
+                }
+                if (!imageModal.classList.contains('hidden')) {
+                    closeImage();
+                }
+            }
+        });
+
+        // 查询提交
+        querySubmit.addEventListener('click', function() {
+            const inputValue = studentInput.value.trim();
+            
+            if (inputValue === '') {
+                queryError.textContent = '请输入姓名+学号';
+                return;
+            }
+
+            // 去除所有空格，方便匹配
+            const cleanInput = inputValue.replace(/\s+/g, '');
+
+            // 根据输入显示不同图片或错误
+            if (cleanInput === '江雨薇4633') {
+                showImage('https://s1.img-e.com/20260217/699407a009c0c.jpg');
+            } else if (cleanInput === '林泽川1399') {
+                showImage('https://s1.img-e.com/20260217/699407a00a0b5.jpg');
+            } else {
+                queryError.textContent = '暂无体检结果';
+            }
+        });
+
+        // 回车键提交
+        studentInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                querySubmit.click();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>红鸟班</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高级私立中学</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <!-- 修改后的搜索栏，添加 target="_blank" -->
+        <div class="search-bar">
+            <div class="search-group">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="输入关键词..." id="search-input">
+                    <button class="search-button" id="search-button">搜索</button>
+                </div>
+            </div>
+            <a href="01邮件.html" class="home-icon" title="返回工作台" target="_blank">🏠</a>
+        </div>
+
+        <div class="content-area">
+            <div class="back-button" onclick="history.back()">返回</div>
+
+            <div class="news-detail">
+                <div class="news-header">
+                    <h1 class="news-title">高一红鸟班期末考试《眷恋》作品展顺利举行</h1>
+                    <div class="news-meta">
+                        <span>发布部门：校园新闻部</span>
+                        <span>发布日期：2024.06.30</span>
+                        <span>阅读量：1,856</span>
+                    </div>
+                </div>
+                <div class="news-content">
+                    <p>本周，圣樱高级私立中学高一红鸟班期末主题作品展在艺术楼展厅顺利举行。作为学校特色美术艺考班级，红鸟班此次共展出三十余幅学生作品，吸引了全校师生前来观展。</p>
+                    
+                    <p>班主任赵子安老师这几天都泡在展厅里，他笑着向记者介绍每一幅作品背后的故事。谈及印象最深的一幅画，赵子安指向了林泽川所作的《细雨蔷薇》。</p>
+                    
+                    <p>“和其他青春期作品常见的张扬、热烈不同，泽川这幅画情感很含蓄，有超出年龄的细腻表达。”赵子安笑谈道。“我看完还跟他说，画里的情绪这么饱满，让我以为他谈恋爱了呢。”</p>
+
+                    <p>谈到这一届学生的整体水平，赵子安言语间满是欣慰。他透露，在与校长的沟通会上，自己为红鸟班争取了更多“远洋计划”的参与名额。“这是个国际交流项目，希望这些孩子能有更广阔的天地。”</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">10/43</span>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+    </script>
+    <script src="search.js"></script>
+</body>
+</html>

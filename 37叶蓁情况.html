@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>帖子详情 · 圣樱高校学生论坛</title>
+    <link rel="stylesheet" href="style-forum.css">
+</head>
+<body>
+    <div class="container">
+        <div class="simple-bar">
+            <div class="simple-left">
+                <span class="simple-dot"></span>
+                <span>圣樱高校学生论坛</span>
+            </div>
+            <span id="current-time"></span>
+        </div>
+
+        <div class="content-area">
+            <div class="nav-bar">
+                <span class="back-link" onclick="history.back()">返回</span>
+            </div>
+
+            <div class="post-main">
+                <h1 class="post-title">7班现在啥情况，真搞上孤立了？</h1>
+                
+                <div class="post-header">
+                    <span class="author-name">帖主</span>
+                    <span class="post-meta">2025-09-11</span>
+                </div>
+                
+                <div class="post-content">
+                    <p>昨天跟她们班一起上体育课，感觉真的完全没人理叶蓁啊[惊恐]</p>
+                </div>
+            </div>
+
+            <div class="comments-section">
+                <div class="comments-title">全部回复 · 6条</div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人A</span>
+                        <span class="comment-time">2025-09-12</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>上来就扣帽子啥意思？少管别人班的事儿行吗？</p>
+                    </div>
+                </div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@帖主</span>
+                        <span class="comment-time">2025-09-12</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>额，我就是想问你们真的所有人都那么讨厌叶蓁吗。。感觉她罪不致此吧？。</p>
+                    </div>
+                </div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人A</span>
+                        <span class="comment-time">2025-09-13</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>……每个人都有选择自己朋友的权利吧？不跟她玩也有错？</p>
+                    </div>
+                </div>
+                
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人B</span>
+                        <span class="comment-time">2025-09-13</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>emmmm其实也没多么讨厌她，只是本来就不熟，在目前这个情况跟她交好就代表跟jyw站对立面，麻烦会更大，大部分人还是希望能安稳读书吧……</p>
+                    </div>
+                </div>
+
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@帖主</span>
+                        <span class="comment-time">2025-09-13</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>那jyw不就是带头霸凌吗。。。就因为叶蓁考试成绩比她好那么一丢丢？</p>
+                    </div>
+                </div>
+
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-name">@路人B</span>
+                        <span class="comment-time">2025-09-13</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>她们本来关系很好的，我只能说变成今天这样不是单纯的谁对谁错，叶蓁有时候说话真的不太好听……</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-corner">
+        <span>调查进度</span>
+        <span class="progress-value" id="progress-value">43/100</span>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>
